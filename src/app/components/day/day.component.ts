@@ -9,13 +9,13 @@ import { Box } from './box';
 export class DayComponent implements OnInit {
   mousePosition: string = 'y: ?px';
   boxes: Box[] = [
-    { title: 'first box', height: 50 },
-    { title: 'second box', height: 100 },
+    { title: 'first box', height: 40 },
+    { title: 'second box', height: 80 },
   ];
   currentBoxIndex = -1;
 
   MIN_BOX_HEIGHT = 40;
-  HEIGHT_INCREMENT = 20;
+  HEIGHT_INCREMENT = 30;
 
   DAY_LENGTH = 24 * this.HEIGHT_INCREMENT;
 
