@@ -1,9 +1,14 @@
+.day {
+  margin: 5px;
+}
+
 .box {
   width: 200px;
   margin-bottom: 5px;
   position: relative;
 
-  background-color: black;
+  background-color: rgb(0, 0, 0);
+  border-radius: 5px;
   color: white;
 }
 

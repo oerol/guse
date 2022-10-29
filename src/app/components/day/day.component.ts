@@ -12,7 +12,7 @@ export class DayComponent implements OnInit {
     { title: 'first box', height: 50 },
     { title: 'second box', height: 100 },
   ];
-  currentBoxIndex = 0;
+  currentBoxIndex = -1;
 
   MIN_BOX_HEIGHT = 50;
 
