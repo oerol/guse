@@ -10,7 +10,7 @@ export class DayComponent implements OnInit {
   mousePosition: string = 'y: ?px';
   boxes: Box[] = [
     { title: 'first box', height: 50 },
-    { title: 'first box', height: 100 },
+    { title: 'second box', height: 100 },
   ];
   currentBoxIndex = 0;
 
