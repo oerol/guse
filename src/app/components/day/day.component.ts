@@ -14,6 +14,8 @@ export class DayComponent implements OnInit {
   ];
   currentBoxIndex = 0;
 
+  MIN_BOX_HEIGHT = 50;
+
   constructor() {}
 
   getMousePostion = (e: MouseEvent) => {
@@ -26,7 +28,13 @@ export class DayComponent implements OnInit {
     let boxSize = currentBox.getBoundingClientRect();
     console.log(boxSize.top);
 
-    this.boxes[this.currentBoxIndex].height = e.clientY - boxSize.top;
+    let newBoxHeight = e.clientY - boxSize.top;
+
+    if (newBoxHeight < this.MIN_BOX_HEIGHT) {
+      this.boxes[this.currentBoxIndex].height = this.MIN_BOX_HEIGHT;
+    } else {
+      this.boxes[this.currentBoxIndex].height = newBoxHeight;
+    }
   };
   onMouseUp = (e: MouseEvent) => {
     console.log('up');
