@@ -9,12 +9,12 @@ import { Box } from './box';
 export class DayComponent implements OnInit {
   mousePosition: string = 'y: ?px';
   boxes: Box[] = [
-    { title: 'first box', height: 40 },
-    { title: 'second box', height: 80 },
+    { title: 'first box', height: 30 },
+    { title: 'second box', height: 120 },
   ];
   currentBoxIndex = -1;
 
-  MIN_BOX_HEIGHT = 40;
+  MIN_BOX_HEIGHT = 30;
   HEIGHT_INCREMENT = 30;
 
   DAY_LENGTH = 24 * this.HEIGHT_INCREMENT;
@@ -88,5 +88,16 @@ export class DayComponent implements OnInit {
   createNewBox() {
     let newBox = { title: 'new box', height: this.MIN_BOX_HEIGHT };
     this.boxes.push(newBox);
+  }
+
+  getBoxDuration(boxHeight: number) {
+    let duration = boxHeight / this.HEIGHT_INCREMENT / 2;
+    let durationInHours = Math.floor(duration);
+
+    if (duration % 1 === 0) {
+      return `${durationInHours}:00`;
+    } else {
+      return `${durationInHours}:30`;
+    }
   }
 }

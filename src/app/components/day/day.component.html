@@ -6,6 +6,9 @@
     [id]="'box-' + (index + 1)"
   >
     <span class="box-text">{{ box.title }}</span>
+    <div class="box-duration">
+      {{ getBoxDuration(box.height) }}
+    </div>
     <div
       class="lower-drag-handle drag-handle"
       (mousedown)="handleMouseDown($event)"

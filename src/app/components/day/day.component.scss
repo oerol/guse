@@ -21,9 +21,14 @@
   cursor: ns-resize;
 }
 
-.lower-drag-handle {
+.lower-drag-handle,
+.box-duration {
   position: absolute;
   bottom: 0;
+}
+
+.box-duration {
+  right: 0;
 }
 
 .group-a {
