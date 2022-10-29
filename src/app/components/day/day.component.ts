@@ -39,7 +39,9 @@ export class DayComponent implements OnInit {
     e.preventDefault();
     console.log('down');
 
-    let boxElement = e.target as HTMLDivElement;
+    let dragHandle = e.target as HTMLDivElement;
+
+    let boxElement = dragHandle.parentElement as HTMLDivElement;
     let boxElementID = boxElement.id.split('-')[1];
     this.currentBoxIndex = parseInt(boxElementID) - 1;
 
