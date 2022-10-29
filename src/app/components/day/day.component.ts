@@ -100,4 +100,60 @@ export class DayComponent implements OnInit {
       return `${durationInHours}:30`;
     }
   }
+
+  showContextMenu(targetElement: HTMLDivElement) {
+    let boxElementSize = targetElement.getBoundingClientRect();
+
+    let contextMenuElement = document.getElementById(
+      'box-context-menu'
+    ) as HTMLDivElement;
+
+    contextMenuElement.style.display = 'block';
+    contextMenuElement.style.left = `${boxElementSize.right + 10}px`;
+    contextMenuElement.style.top = `${boxElementSize.top}px`;
+  }
+
+  hideContextMenu() {
+    let contextMenuElement = document.getElementById(
+      'box-context-menu'
+    ) as HTMLDivElement;
+
+    contextMenuElement.style.display = 'none';
+  }
+
+  contextMenuBoxElementIndex = -1;
+
+  handleMouseMove = (e: MouseEvent) => {
+    let boxElement = e.target as HTMLDivElement;
+
+    // Use the main box element to place the context menu
+    if (boxElement.classList.contains('box')) {
+      this.showContextMenu(boxElement);
+
+      let boxElementID = boxElement.id.split('-')[1];
+      this.contextMenuBoxElementIndex = parseInt(boxElementID);
+    }
+  };
+
+  handleMouseLeave = (e: MouseEvent) => {
+    // this.hideContextMenu();
+  };
+
+  changeCategory = (color: string) => {
+    let currentBoxElement = document.getElementById(
+      'box-' + this.contextMenuBoxElementIndex
+    ) as HTMLElement;
+
+    // Remove existing group classes
+    let classList = currentBoxElement.classList;
+    classList.forEach((className) => {
+      if (className.includes('group')) {
+        currentBoxElement.classList.remove(className);
+      }
+    });
+
+    console.log(classList);
+
+    currentBoxElement.classList.add(`group-${color}`);
+  };
 }

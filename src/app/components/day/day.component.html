@@ -4,6 +4,8 @@
     [ngStyle]="{ height: box.height + 'px' }"
     class="box"
     [id]="'box-' + (index + 1)"
+    (mousemove)="handleMouseMove($event)"
+    (mouseleave)="handleMouseLeave($event)"
   >
     <span class="box-text">{{ box.title }}</span>
     <div class="box-duration">
@@ -14,6 +16,11 @@
       (mousedown)="handleMouseDown($event)"
     ></div>
   </div>
+</div>
+<div id="box-context-menu">
+  <span (click)="changeCategory('red')">r</span>
+  <span (click)="changeCategory('green')">g</span>
+  <span (click)="changeCategory('blue')">b</span>
 </div>
 <div id="boxesHelper">{{ boxesToString() }}</div>
 <div id="mousePositionHelper">{{ mousePosition }}</div>
