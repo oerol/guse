@@ -64,4 +64,9 @@ export class DayComponent implements OnInit {
   boxesToString() {
     return JSON.stringify(this.boxes);
   }
+
+  createNewBox() {
+    let newBox = { title: 'new box', height: this.MIN_BOX_HEIGHT };
+    this.boxes.push(newBox);
+  }
 }
