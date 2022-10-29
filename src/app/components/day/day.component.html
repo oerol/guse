@@ -1,0 +1,11 @@
+<div *ngFor="let box of boxes; index as index" class="day">
+  <div
+    [ngStyle]="{ height: box.height + 'px' }"
+    class="box"
+    [id]="'box-' + (index + 1)"
+    (mousedown)="handleMouseDown($event)"
+  ></div>
+</div>
+<div id="boxesHelper">{{ boxesToString() }}</div>
+<div id="mousePositionHelper">{{ mousePosition }}</div>
+<div id="currentBoxHelper">{{ "current box:" + currentBoxIndex }}</div>
