@@ -7,8 +7,12 @@
   margin-bottom: 5px;
   position: relative;
 
+  box-sizing: border-box;
+  padding: 5px;
+
   background-color: rgb(0, 0, 0);
   border-radius: 5px;
+  border-left: 5px solid #c6c2bb;
   color: white;
 
   transition: 0.04s ease-out height;
@@ -28,7 +32,8 @@
 }
 
 .box-duration {
-  right: 0;
+  right: 4px;
+  bottom: 2px;
 }
 
 .group-a {
@@ -57,5 +62,6 @@
 }
 
 #box-context-menu {
+  display: none;
   position: absolute;
 }
