@@ -15,6 +15,7 @@ export class DayComponent implements OnInit {
   currentBoxIndex = -1;
 
   MIN_BOX_HEIGHT = 50;
+  HEIGHT_INCREMENT = 20;
 
   constructor() {}
 
@@ -26,14 +27,15 @@ export class DayComponent implements OnInit {
     let currentBox =
       document.getElementsByClassName('box')[this.currentBoxIndex];
     let boxSize = currentBox.getBoundingClientRect();
-    console.log(boxSize.top);
 
     let newBoxHeight = e.clientY - boxSize.top;
+    let incrementedBoxHeight =
+      Math.floor(newBoxHeight / this.HEIGHT_INCREMENT) * this.HEIGHT_INCREMENT;
 
-    if (newBoxHeight < this.MIN_BOX_HEIGHT) {
+    if (incrementedBoxHeight < this.MIN_BOX_HEIGHT) {
       this.boxes[this.currentBoxIndex].height = this.MIN_BOX_HEIGHT;
     } else {
-      this.boxes[this.currentBoxIndex].height = newBoxHeight;
+      this.boxes[this.currentBoxIndex].height = incrementedBoxHeight;
     }
   };
   onMouseUp = (e: MouseEvent) => {
