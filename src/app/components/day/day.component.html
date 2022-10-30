@@ -6,6 +6,7 @@
     [id]="'box-' + (index + 1)"
     (mousemove)="handleMouseMove($event)"
     (mouseleave)="handleMouseLeave($event)"
+    (mousedown)="dragBox($event)"
   >
     <span class="box-text">{{ box.title }}</span>
     <div class="box-duration">

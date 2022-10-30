@@ -12,6 +12,13 @@
   color: white;
 
   transition: 0.04s ease-out height;
+  cursor: grab;
+
+  user-select: none;
+}
+
+.box-drag {
+  opacity: 0.5;
 }
 
 .drag-handle {

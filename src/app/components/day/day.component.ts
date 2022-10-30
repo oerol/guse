@@ -144,4 +144,35 @@ export class DayComponent implements OnInit {
   changeCategory = (color: string) => {
     this.boxes[this.contextMenuBoxElementIndex - 1].group = color;
   };
+
+  dragBoxElementIndex = -1;
+
+  dragBox = (e: MouseEvent) => {
+    let boxElement = e.target as HTMLElement;
+
+    if (boxElement.id.includes('box')) {
+      boxElement.classList.add('box-drag');
+
+      let index = boxElement.id.split('-')[1];
+      this.dragBoxElementIndex = parseInt(index) - 1;
+
+      // https://stackoverflow.com/questions/10750582/global-override-of-mouse-cursor-with-javascript
+      const cursorStyle = document.createElement('style');
+      cursorStyle.innerHTML = '*{cursor: grabbing!important;}';
+      cursorStyle.id = 'cursor-style';
+      document.head.appendChild(cursorStyle);
+
+      document.addEventListener('mouseup', this.endDragBox);
+    }
+  };
+
+  endDragBox = (e: MouseEvent) => {
+    let currentBox =
+      document.getElementsByClassName('box')[this.dragBoxElementIndex];
+    currentBox.classList.remove('box-drag');
+
+    document.getElementById('cursor-style')!.remove();
+
+    document.removeEventListener('mouseup', this.endDragBox);
+  };
 }
