@@ -9,8 +9,8 @@ import { Box } from './box';
 export class DayComponent implements OnInit {
   mousePosition: string = 'y: ?px';
   boxes: Box[] = [
-    { title: 'first box', height: 30 },
-    { title: 'second box', height: 120 },
+    { title: 'first box', height: 30, group: 'red' },
+    { title: 'second box', height: 120, group: 'green' },
   ];
   currentBoxIndex = -1;
 
@@ -140,20 +140,6 @@ export class DayComponent implements OnInit {
   };
 
   changeCategory = (color: string) => {
-    let currentBoxElement = document.getElementById(
-      'box-' + this.contextMenuBoxElementIndex
-    ) as HTMLElement;
-
-    // Remove existing group classes
-    let classList = currentBoxElement.classList;
-    classList.forEach((className) => {
-      if (className.includes('group')) {
-        currentBoxElement.classList.remove(className);
-      }
-    });
-
-    console.log(classList);
-
-    currentBoxElement.classList.add(`group-${color}`);
+    this.boxes[this.contextMenuBoxElementIndex - 1].group = color;
   };
 }

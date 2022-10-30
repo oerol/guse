@@ -2,7 +2,7 @@
   <div
     *ngFor="let box of boxes; index as index"
     [ngStyle]="{ height: box.height + 'px' }"
-    class="box"
+    [class]="'box' + ' ' + 'group-' + box.group"
     [id]="'box-' + (index + 1)"
     (mousemove)="handleMouseMove($event)"
     (mouseleave)="handleMouseLeave($event)"
