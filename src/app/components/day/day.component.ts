@@ -11,6 +11,8 @@ export class DayComponent implements OnInit {
   boxes: Box[] = [
     { title: 'first box', height: 30, group: 'red' },
     { title: 'second box', height: 120, group: 'green' },
+    { title: 'third box', height: 60 },
+    { title: 'fourth box', height: 30, group: 'blue' },
   ];
   currentBoxIndex = -1;
 
