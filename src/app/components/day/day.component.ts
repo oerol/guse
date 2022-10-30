@@ -9,10 +9,18 @@ import { Box } from './box';
 export class DayComponent implements OnInit {
   mousePosition: string = 'y: ?px';
   boxes: Box[] = [
-    { title: 'first box', height: 25, group: 'red' },
-    { title: 'second box', height: 120, group: 'green' },
-    { title: 'third box', height: 60 },
-    { title: 'fourth box', height: 25, group: 'blue' },
+    { title: 'meditate', height: 25, group: 'green' },
+    { title: 'read', height: 50, group: 'blue' },
+    { title: 'breakfast', height: 25 },
+    { title: 'work', height: 200, group: 'gray' },
+    { title: 'rest', height: 25 },
+    { title: 'workout', height: 100, group: 'green' },
+    { title: 'rest', height: 50 },
+    { title: 'game', height: 75, group: 'purple' },
+    { title: 'piano', height: 50, group: 'yellow' },
+    { title: 'study', height: 125, group: 'blue' },
+    { title: 'rest', height: 25 },
+    { title: 'read', height: 50, group: 'blue' },
   ];
   currentBoxIndex = -1;
 

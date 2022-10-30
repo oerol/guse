@@ -6,7 +6,7 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 820px;
+  height: 855px;
 }
 
 .box {
@@ -78,6 +78,18 @@
 }
 .group-blue {
   background-color: blue;
+}
+.group-blue {
+  background-color: blue;
+}
+.group-gray {
+  background-color: rgb(150, 147, 147);
+}
+.group-purple {
+  background-color: purple;
+}
+.group-yellow {
+  background-color: rgb(160, 160, 0);
 }
 
 #box-context-menu {
