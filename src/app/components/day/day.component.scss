@@ -28,6 +28,11 @@
   user-select: none;
 }
 
+.box-text {
+  position: absolute;
+  top: 3px;
+}
+
 .box-drag {
   opacity: 0.5;
 }

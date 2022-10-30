@@ -1,7 +1,7 @@
 <div class="day-wrapper">
   <div class="day-duration">
     <div class="day-start">07:00 ----</div>
-    <div class="day-end">22:00 ----</div>
+    <div class="day-end">23:00 ----</div>
   </div>
 
   <div class="day">
@@ -14,7 +14,7 @@
       (mouseleave)="handleMouseLeave($event)"
       (mousedown)="dragBox($event)"
     >
-      <span class="box-text">{{ box.title }}</span>
+      <div class="box-text">{{ box.title }}</div>
       <div class="box-duration">
         {{ getBoxDuration(box.height) }}
       </div>
