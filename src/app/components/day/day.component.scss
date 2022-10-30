@@ -1,3 +1,14 @@
+.day-wrapper {
+  display: flex;
+}
+
+.day-duration {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 740px;
+}
+
 .box {
   width: 200px;
   margin-bottom: 5px;
