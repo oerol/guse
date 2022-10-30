@@ -176,19 +176,34 @@ export class DayComponent implements OnInit {
     let newBoxPosition = e.clientY;
 
     let boxElements = Array.from(document.getElementsByClassName('box'));
-    boxElements.reverse();
+    let firstBoxElementPosition = boxElements[0].getBoundingClientRect();
 
-    for (let boxElement of boxElements) {
-      let boxElementPosition = boxElement.getBoundingClientRect();
+    if (newBoxPosition < firstBoxElementPosition.top) {
+      let currentBoxArrayElement = this.boxes.splice(
+        this.dragBoxElementIndex,
+        1
+      )[0];
+      let boxElementIndex = parseInt(boxElements[0].id.split('-')[1]) - 1;
 
-      if (newBoxPosition > boxElementPosition.top) {
-        console.log(boxElement);
-        let boxElementIndex = parseInt(boxElement.id.split('-')[1]) - 1;
+      this.boxes.splice(boxElementIndex, 0, currentBoxArrayElement);
+    } else {
+      boxElements.reverse();
 
-        let boxArrayElement = this.boxes.splice(this.dragBoxElementIndex, 1)[0];
-        console.log(boxArrayElement);
-        this.boxes.splice(boxElementIndex, 0, boxArrayElement);
-        break;
+      for (let boxElement of boxElements) {
+        let boxElementPosition = boxElement.getBoundingClientRect();
+
+        if (newBoxPosition > boxElementPosition.top) {
+          console.log(boxElement);
+          let boxElementIndex = parseInt(boxElement.id.split('-')[1]) - 1;
+
+          let currentBoxArrayElement = this.boxes.splice(
+            this.dragBoxElementIndex,
+            1
+          )[0];
+          console.log(currentBoxArrayElement);
+          this.boxes.splice(boxElementIndex, 0, currentBoxArrayElement);
+          break;
+        }
       }
     }
 
