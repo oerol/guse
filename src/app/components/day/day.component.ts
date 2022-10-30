@@ -173,6 +173,25 @@ export class DayComponent implements OnInit {
 
     document.getElementById('cursor-style')!.remove();
 
+    let newBoxPosition = e.clientY;
+
+    let boxElements = Array.from(document.getElementsByClassName('box'));
+    boxElements.reverse();
+
+    for (let boxElement of boxElements) {
+      let boxElementPosition = boxElement.getBoundingClientRect();
+
+      if (newBoxPosition > boxElementPosition.top) {
+        console.log(boxElement);
+        let boxElementIndex = parseInt(boxElement.id.split('-')[1]) - 1;
+
+        let boxArrayElement = this.boxes.splice(this.dragBoxElementIndex, 1)[0];
+        console.log(boxArrayElement);
+        this.boxes.splice(boxElementIndex, 0, boxArrayElement);
+        break;
+      }
+    }
+
     document.removeEventListener('mouseup', this.endDragBox);
   };
 }
