@@ -178,8 +178,11 @@ export class DayComponent implements OnInit {
       ghostBoxElement.style.position = 'absolute';
       document.body.append(ghostBoxElement);
 
-      ghostBoxElement.style.top = `${e.clientY}px`;
-      ghostBoxElement.style.left = `${e.clientX}px`;
+      let boxWidth = 200;
+      let boxHeight = this.boxes[this.dragBoxElementIndex].height;
+
+      ghostBoxElement.style.top = `${e.clientY - boxHeight / 2}px`;
+      ghostBoxElement.style.left = `${e.clientX - boxWidth / 2}px`;
 
       document.addEventListener('mousemove', this.ghostDragBox);
       document.addEventListener('mouseup', this.endDragBox);
@@ -187,12 +190,13 @@ export class DayComponent implements OnInit {
   };
 
   ghostDragBox = (e: MouseEvent) => {
-    let boxElement =
-      document.getElementsByClassName('box')[this.dragBoxElementIndex];
-
     let ghostBoxElement = document.getElementById('box-ghost') as HTMLElement;
-    ghostBoxElement.style.top = `${e.clientY}px`;
-    ghostBoxElement.style.left = `${e.clientX}px`;
+
+    let boxWidth = 200;
+    let boxHeight = this.boxes[this.dragBoxElementIndex].height;
+
+    ghostBoxElement.style.top = `${e.clientY - boxHeight / 2}px`;
+    ghostBoxElement.style.left = `${e.clientX - boxWidth / 2}px`;
   };
 
   endDragBox = (e: MouseEvent) => {
@@ -222,14 +226,12 @@ export class DayComponent implements OnInit {
         let boxElementPosition = boxElement.getBoundingClientRect();
 
         if (newBoxPosition > boxElementPosition.top) {
-          console.log(boxElement);
           let boxElementIndex = parseInt(boxElement.id.split('-')[1]) - 1;
 
           let currentBoxArrayElement = this.boxes.splice(
             this.dragBoxElementIndex,
             1
           )[0];
-          console.log(currentBoxArrayElement);
           this.boxes.splice(boxElementIndex, 0, currentBoxArrayElement);
           break;
         }
