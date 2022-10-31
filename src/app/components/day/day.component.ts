@@ -170,8 +170,26 @@ export class DayComponent implements OnInit {
       cursorStyle.id = 'cursor-style';
       document.head.appendChild(cursorStyle);
 
+      // Visual feedback
+
+      let ghostBoxElement = boxElement.cloneNode(true) as HTMLElement;
+      ghostBoxElement.id = 'box-ghost';
+      ghostBoxElement.classList.remove('box-drag');
+      ghostBoxElement.style.position = 'absolute';
+      document.body.append(ghostBoxElement);
+
+      document.addEventListener('mousemove', this.ghostDragBox);
       document.addEventListener('mouseup', this.endDragBox);
     }
+  };
+
+  ghostDragBox = (e: MouseEvent) => {
+    let boxElement =
+      document.getElementsByClassName('box')[this.dragBoxElementIndex];
+
+    let ghostBoxElement = document.getElementById('box-ghost') as HTMLElement;
+    ghostBoxElement.style.top = `${e.clientY}px`;
+    ghostBoxElement.style.left = `${e.clientX}px`;
   };
 
   endDragBox = (e: MouseEvent) => {
@@ -215,6 +233,10 @@ export class DayComponent implements OnInit {
       }
     }
 
+    let ghostBoxElement = document.getElementById('box-ghost') as HTMLElement;
+    ghostBoxElement.remove();
+
+    document.removeEventListener('mousemove', this.ghostDragBox);
     document.removeEventListener('mouseup', this.endDragBox);
   };
 }
