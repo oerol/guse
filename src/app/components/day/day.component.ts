@@ -223,17 +223,19 @@ export class DayComponent implements OnInit {
       boxElements.reverse();
 
       for (let boxElement of boxElements) {
-        let boxElementPosition = boxElement.getBoundingClientRect();
+        if (!boxElement.id.includes('ghost')) {
+          let boxElementPosition = boxElement.getBoundingClientRect();
 
-        if (newBoxPosition > boxElementPosition.top) {
-          let boxElementIndex = parseInt(boxElement.id.split('-')[1]) - 1;
+          if (newBoxPosition > boxElementPosition.top) {
+            let boxElementIndex = parseInt(boxElement.id.split('-')[1]) - 1;
 
-          let currentBoxArrayElement = this.boxes.splice(
-            this.dragBoxElementIndex,
-            1
-          )[0];
-          this.boxes.splice(boxElementIndex, 0, currentBoxArrayElement);
-          break;
+            let currentBoxArrayElement = this.boxes.splice(
+              this.dragBoxElementIndex,
+              1
+            )[0];
+            this.boxes.splice(boxElementIndex, 0, currentBoxArrayElement);
+            break;
+          }
         }
       }
     }
