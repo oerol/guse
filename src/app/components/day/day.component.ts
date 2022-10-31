@@ -35,9 +35,13 @@ export class DayComponent implements OnInit {
 
   TIME_SPENT_AWAKE = 16;
 
-  DAY_LENGTH = this.TIME_SPENT_AWAKE * this.HEIGHT_IN_HOURS * this.HEIGHT_INCREMENT;
+  DAY_LENGTH = this.TIME_SPENT_AWAKE * 2 * this.HEIGHT_INCREMENT;
 
   constructor() {}
+
+  ngOnInit(): void {
+    document.onmousemove = this.getMousePosition;
+  }
 
   getHeightOfOtherBoxes = () => {
     let heights = 0;
@@ -50,7 +54,7 @@ export class DayComponent implements OnInit {
     return heights;
   };
 
-  getMousePostion = (e: MouseEvent) => {
+  getMousePosition = (e: MouseEvent) => {
     this.mousePosition = `y: ${e.clientY}px`;
   };
 
@@ -58,40 +62,40 @@ export class DayComponent implements OnInit {
     let currentBox = document.getElementsByClassName('box')[this.currentBoxIndex];
     let boxSize = currentBox.getBoundingClientRect();
 
-    let newBoxHeight = e.clientY - boxSize.top;
-    let incrementedBoxHeight = Math.floor(newBoxHeight / this.HEIGHT_INCREMENT) * this.HEIGHT_INCREMENT;
+    let intendedBoxHeight = e.clientY - boxSize.top;
+    let incrementedBoxHeight = Math.floor(intendedBoxHeight / this.HEIGHT_INCREMENT) * this.HEIGHT_INCREMENT;
 
     let heightsOfOtherBoxes = this.getHeightOfOtherBoxes();
 
+    let newBoxHeight;
     if (incrementedBoxHeight < this.MIN_BOX_HEIGHT) {
-      this.boxes[this.currentBoxIndex].height = this.MIN_BOX_HEIGHT;
+      newBoxHeight = this.MIN_BOX_HEIGHT;
     } else if (incrementedBoxHeight + heightsOfOtherBoxes > this.DAY_LENGTH) {
-      this.boxes[this.currentBoxIndex].height = this.DAY_LENGTH - heightsOfOtherBoxes;
+      newBoxHeight = this.DAY_LENGTH - heightsOfOtherBoxes;
     } else {
-      this.boxes[this.currentBoxIndex].height = incrementedBoxHeight;
+      newBoxHeight = incrementedBoxHeight;
     }
+    this.boxes[this.currentBoxIndex].height = newBoxHeight;
   };
+
   onMouseUp = (e: MouseEvent) => {
     document.removeEventListener('mousemove', this.onMouseMove);
     document.removeEventListener('mouseup', this.onMouseUp);
   };
 
-  handleMouseDown = (e: MouseEvent) => {
-    e.preventDefault();
-
-    let dragHandle = e.target as HTMLDivElement;
-
-    let boxElement = dragHandle.parentElement as HTMLDivElement;
+  setCurrentBoxIndex = (dragHandleElement: HTMLElement) => {
+    let boxElement = dragHandleElement.parentElement as HTMLDivElement;
     let boxElementID = boxElement.id.split('-')[1];
     this.currentBoxIndex = parseInt(boxElementID) - 1;
+  };
+
+  handleMouseDown = (e: MouseEvent) => {
+    e.preventDefault();
+    this.setCurrentBoxIndex(e.target as HTMLDivElement);
 
     document.addEventListener('mousemove', this.onMouseMove);
     document.addEventListener('mouseup', this.onMouseUp);
   };
-
-  ngOnInit(): void {
-    document.onmousemove = this.getMousePostion;
-  }
 
   boxesToString() {
     return JSON.stringify(this.boxes);
@@ -114,9 +118,8 @@ export class DayComponent implements OnInit {
   }
 
   showContextMenu(targetElement: HTMLDivElement) {
-    let boxElementSize = targetElement.getBoundingClientRect();
-
     let contextMenuElement = document.getElementById('box-context-menu') as HTMLDivElement;
+    let boxElementSize = targetElement.getBoundingClientRect();
 
     contextMenuElement.style.display = 'block';
     contextMenuElement.style.left = `${boxElementSize.right + 10}px`;
@@ -126,7 +129,7 @@ export class DayComponent implements OnInit {
   handleMouseMove = (e: MouseEvent) => {
     let boxElement = e.target as HTMLDivElement;
 
-    // Use the main box element to place the context menu
+    // Use the box element to place the context menu (and not the child elements)
     if (boxElement.classList.contains('box')) {
       this.showContextMenu(boxElement);
 
@@ -139,6 +142,18 @@ export class DayComponent implements OnInit {
     this.boxes[this.contextMenuBoxElementIndex - 1].group = color;
   };
 
+  // https://stackoverflow.com/questions/10750582/global-override-of-mouse-cursor-with-javascript
+  setGlobalCursor = (cursor: string) => {
+    const cursorStyle = document.createElement('style');
+    cursorStyle.innerHTML = `*{cursor: ${cursor}!important;}`;
+    cursorStyle.id = `global-cursor-style-${cursor}`;
+    document.head.appendChild(cursorStyle);
+  };
+
+  removeGlobalCursor = (cursor: string) => {
+    document.getElementById(`global-cursor-style-${cursor}`)!.remove();
+  };
+
   dragBox = (e: MouseEvent) => {
     let boxElement = e.target as HTMLElement;
 
@@ -146,11 +161,7 @@ export class DayComponent implements OnInit {
       let index = boxElement.id.split('-')[1];
       this.dragBoxElementIndex = parseInt(index) - 1;
 
-      // https://stackoverflow.com/questions/10750582/global-override-of-mouse-cursor-with-javascript
-      const cursorStyle = document.createElement('style');
-      cursorStyle.innerHTML = '*{cursor: grabbing!important;}';
-      cursorStyle.id = 'cursor-style';
-      document.head.appendChild(cursorStyle);
+      this.setGlobalCursor('grabbing');
 
       // Visual feedback
 
@@ -181,9 +192,7 @@ export class DayComponent implements OnInit {
   };
 
   endDragBox = (e: MouseEvent) => {
-    let currentBox = document.getElementsByClassName('box')[this.dragBoxElementIndex];
-
-    document.getElementById('cursor-style')!.remove();
+    this.removeGlobalCursor('grabbing');
 
     let newBoxPosition = e.clientY;
 
