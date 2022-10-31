@@ -3,19 +3,34 @@
 }
 
 .day-duration {
+  color: #8f8f8f;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 855px;
+  height: 814px;
+  font-size: 10px;
+  position: relative;
+  top: -7px;
+  margin-right: 50px;
+}
+
+.day-tick::after {
+  content: '-------------------------------------------------------';
+  width: 700px;
+  position: absolute;
 }
 
 .box {
   width: 200px;
-  margin-bottom: 5px;
+  margin-bottom: 0px;
   position: relative;
+
+  font-size: 12px;
 
   box-sizing: border-box;
   padding: 5px;
+
+  border: 2px solid #e2ded9;
 
   background-color: rgb(0, 0, 0);
   border-radius: 5px;
@@ -35,6 +50,8 @@
 
 #box-ghost {
   opacity: 0.8;
+  border: none;
+  border-left: 5px solid #c6c2bb;
 }
 
 .drag-handle {

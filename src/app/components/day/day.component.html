@@ -1,7 +1,22 @@
 <div class="day-wrapper">
   <div class="day-duration">
-    <div class="day-start">07:00 ----</div>
-    <div class="day-end">23:00 ----</div>
+    <div class="day-tick day-start">07:00</div>
+    <div class="day-tick">08:00</div>
+    <div class="day-tick">09:00</div>
+    <div class="day-tick">10:00</div>
+    <div class="day-tick">11:00</div>
+    <div class="day-tick">12:00</div>
+    <div class="day-tick">13:00</div>
+    <div class="day-tick">14:00</div>
+    <div class="day-tick">15:00</div>
+    <div class="day-tick">16:00</div>
+    <div class="day-tick">17:00</div>
+    <div class="day-tick">18:00</div>
+    <div class="day-tick">19:00</div>
+    <div class="day-tick">20:00</div>
+    <div class="day-tick">21:00</div>
+    <div class="day-tick">22:00</div>
+    <div class="day-tick day-end">23:00</div>
   </div>
 
   <div class="day">
@@ -26,8 +41,8 @@
     <span (click)="changeCategory('blue')">b</span>
   </div>
 </div>
-<div id="mousePositionHelper">{{ mousePosition }}</div>
 <!-- 
+  <div id="mousePositionHelper">{{ mousePosition }}</div>
   <div id="boxesHelper">{{ boxesToString() }}</div>
   <div id="currentBoxHelper">{{ "current box:" + currentBoxIndex }}</div>
   <button class="addBoxHelper" (click)="createNewBox()">create box</button>
