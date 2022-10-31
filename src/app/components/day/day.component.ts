@@ -8,6 +8,7 @@ import { Box } from './box';
 })
 export class DayComponent implements OnInit {
   mousePosition: string = 'y: ?px';
+
   boxes: Box[] = [
     { title: 'meditate', height: 25, group: 'green' },
     { title: 'read', height: 50, group: 'blue' },
@@ -22,16 +23,23 @@ export class DayComponent implements OnInit {
     { title: 'rest', height: 25 },
     { title: 'read', height: 50, group: 'blue' },
   ];
-  currentBoxIndex = -1;
+
+  currentBoxIndex = -1; // click on resize-handle
+  contextMenuBoxElementIndex = -1; // hover
+  dragBoxElementIndex = -1; // click on box
 
   MIN_BOX_HEIGHT = 25;
-  HEIGHT_INCREMENT = 25;
 
-  DAY_LENGTH = 16 * 2 * this.HEIGHT_INCREMENT;
+  HEIGHT_INCREMENT = 25;
+  HEIGHT_IN_HOURS = 0.5;
+
+  TIME_SPENT_AWAKE = 16;
+
+  DAY_LENGTH = this.TIME_SPENT_AWAKE * this.HEIGHT_IN_HOURS * this.HEIGHT_INCREMENT;
 
   constructor() {}
 
-  getOtherBoxesHeights = () => {
+  getHeightOfOtherBoxes = () => {
     let heights = 0;
     this.boxes.forEach((box, index) => {
       if (index !== this.currentBoxIndex) {
@@ -47,35 +55,29 @@ export class DayComponent implements OnInit {
   };
 
   onMouseMove = (e: MouseEvent) => {
-    let currentBox =
-      document.getElementsByClassName('box')[this.currentBoxIndex];
+    let currentBox = document.getElementsByClassName('box')[this.currentBoxIndex];
     let boxSize = currentBox.getBoundingClientRect();
 
     let newBoxHeight = e.clientY - boxSize.top;
-    let incrementedBoxHeight =
-      Math.floor(newBoxHeight / this.HEIGHT_INCREMENT) * this.HEIGHT_INCREMENT;
+    let incrementedBoxHeight = Math.floor(newBoxHeight / this.HEIGHT_INCREMENT) * this.HEIGHT_INCREMENT;
 
-    let otherBoxesHeights = this.getOtherBoxesHeights();
+    let heightsOfOtherBoxes = this.getHeightOfOtherBoxes();
 
     if (incrementedBoxHeight < this.MIN_BOX_HEIGHT) {
       this.boxes[this.currentBoxIndex].height = this.MIN_BOX_HEIGHT;
-    } else if (incrementedBoxHeight + otherBoxesHeights > this.DAY_LENGTH) {
-      this.boxes[this.currentBoxIndex].height =
-        this.DAY_LENGTH - otherBoxesHeights;
+    } else if (incrementedBoxHeight + heightsOfOtherBoxes > this.DAY_LENGTH) {
+      this.boxes[this.currentBoxIndex].height = this.DAY_LENGTH - heightsOfOtherBoxes;
     } else {
       this.boxes[this.currentBoxIndex].height = incrementedBoxHeight;
     }
   };
   onMouseUp = (e: MouseEvent) => {
-    console.log('up');
-
     document.removeEventListener('mousemove', this.onMouseMove);
     document.removeEventListener('mouseup', this.onMouseUp);
   };
 
   handleMouseDown = (e: MouseEvent) => {
     e.preventDefault();
-    console.log('down');
 
     let dragHandle = e.target as HTMLDivElement;
 
@@ -114,24 +116,12 @@ export class DayComponent implements OnInit {
   showContextMenu(targetElement: HTMLDivElement) {
     let boxElementSize = targetElement.getBoundingClientRect();
 
-    let contextMenuElement = document.getElementById(
-      'box-context-menu'
-    ) as HTMLDivElement;
+    let contextMenuElement = document.getElementById('box-context-menu') as HTMLDivElement;
 
     contextMenuElement.style.display = 'block';
     contextMenuElement.style.left = `${boxElementSize.right + 10}px`;
     contextMenuElement.style.top = `${boxElementSize.top}px`;
   }
-
-  hideContextMenu() {
-    let contextMenuElement = document.getElementById(
-      'box-context-menu'
-    ) as HTMLDivElement;
-
-    contextMenuElement.style.display = 'none';
-  }
-
-  contextMenuBoxElementIndex = -1;
 
   handleMouseMove = (e: MouseEvent) => {
     let boxElement = e.target as HTMLDivElement;
@@ -145,15 +135,9 @@ export class DayComponent implements OnInit {
     }
   };
 
-  handleMouseLeave = (e: MouseEvent) => {
-    // this.hideContextMenu();
-  };
-
   changeCategory = (color: string) => {
     this.boxes[this.contextMenuBoxElementIndex - 1].group = color;
   };
-
-  dragBoxElementIndex = -1;
 
   dragBox = (e: MouseEvent) => {
     let boxElement = e.target as HTMLElement;
@@ -197,8 +181,7 @@ export class DayComponent implements OnInit {
   };
 
   endDragBox = (e: MouseEvent) => {
-    let currentBox =
-      document.getElementsByClassName('box')[this.dragBoxElementIndex];
+    let currentBox = document.getElementsByClassName('box')[this.dragBoxElementIndex];
 
     document.getElementById('cursor-style')!.remove();
 
@@ -208,10 +191,7 @@ export class DayComponent implements OnInit {
     let firstBoxElementPosition = boxElements[0].getBoundingClientRect();
 
     if (newBoxPosition < firstBoxElementPosition.top) {
-      let currentBoxArrayElement = this.boxes.splice(
-        this.dragBoxElementIndex,
-        1
-      )[0];
+      let currentBoxArrayElement = this.boxes.splice(this.dragBoxElementIndex, 1)[0];
       let boxElementIndex = parseInt(boxElements[0].id.split('-')[1]) - 1;
 
       this.boxes.splice(boxElementIndex, 0, currentBoxArrayElement);
@@ -225,10 +205,7 @@ export class DayComponent implements OnInit {
           if (newBoxPosition > boxElementPosition.top) {
             let boxElementIndex = parseInt(boxElement.id.split('-')[1]) - 1;
 
-            let currentBoxArrayElement = this.boxes.splice(
-              this.dragBoxElementIndex,
-              1
-            )[0];
+            let currentBoxArrayElement = this.boxes.splice(this.dragBoxElementIndex, 1)[0];
             this.boxes.splice(boxElementIndex, 0, currentBoxArrayElement);
             break;
           }

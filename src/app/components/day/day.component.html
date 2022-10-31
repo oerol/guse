@@ -11,17 +11,13 @@
       [class]="'box' + ' ' + 'group-' + box.group"
       [id]="'box-' + (index + 1)"
       (mousemove)="handleMouseMove($event)"
-      (mouseleave)="handleMouseLeave($event)"
       (mousedown)="dragBox($event)"
     >
       <div class="box-text">{{ box.title }}</div>
       <div class="box-duration">
         {{ getBoxDuration(box.height) }}
       </div>
-      <div
-        class="lower-drag-handle drag-handle"
-        (mousedown)="handleMouseDown($event)"
-      ></div>
+      <div class="lower-drag-handle drag-handle" (mousedown)="handleMouseDown($event)"></div>
     </div>
   </div>
   <div id="box-context-menu">
