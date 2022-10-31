@@ -159,8 +159,6 @@ export class DayComponent implements OnInit {
     let boxElement = e.target as HTMLElement;
 
     if (boxElement.id.includes('box')) {
-      boxElement.classList.add('box-drag');
-
       let index = boxElement.id.split('-')[1];
       this.dragBoxElementIndex = parseInt(index) - 1;
 
@@ -174,7 +172,6 @@ export class DayComponent implements OnInit {
 
       let ghostBoxElement = boxElement.cloneNode(true) as HTMLElement;
       ghostBoxElement.id = 'box-ghost';
-      ghostBoxElement.classList.remove('box-drag');
       ghostBoxElement.style.position = 'absolute';
       document.body.append(ghostBoxElement);
 
@@ -202,7 +199,6 @@ export class DayComponent implements OnInit {
   endDragBox = (e: MouseEvent) => {
     let currentBox =
       document.getElementsByClassName('box')[this.dragBoxElementIndex];
-    currentBox.classList.remove('box-drag');
 
     document.getElementById('cursor-style')!.remove();
 
