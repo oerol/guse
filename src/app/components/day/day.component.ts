@@ -178,6 +178,9 @@ export class DayComponent implements OnInit {
       ghostBoxElement.style.position = 'absolute';
       document.body.append(ghostBoxElement);
 
+      ghostBoxElement.style.top = `${e.clientY}px`;
+      ghostBoxElement.style.left = `${e.clientX}px`;
+
       document.addEventListener('mousemove', this.ghostDragBox);
       document.addEventListener('mouseup', this.endDragBox);
     }
