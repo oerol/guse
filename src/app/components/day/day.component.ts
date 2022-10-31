@@ -228,4 +228,8 @@ export class DayComponent implements OnInit {
     document.removeEventListener('mousemove', this.ghostDragBox);
     document.removeEventListener('mouseup', this.endDragBox);
   };
+
+  removeBox = () => {
+    this.boxes.splice(this.contextMenuBoxElementIndex - 1, 1);
+  };
 }
