@@ -209,6 +209,8 @@ export class DayComponent implements OnInit {
     ghostBoxElement.style.height = `${this.MIN_BOX_HEIGHT}px`;
   };
 
+  dragBoxElement: Box | undefined;
+
   dragBox = (e: MouseEvent) => {
     let boxElement = e.target as HTMLElement;
 
@@ -217,6 +219,13 @@ export class DayComponent implements OnInit {
       this.dragBoxElementIndex = parseInt(index) - 1;
 
       this.setGlobalCursor('grabbing');
+
+      boxElement.style.height = '0px';
+      boxElement.style.padding = '0px';
+      setTimeout(() => {
+        boxElement.style.border = 'none';
+        this.dragBoxElement = this.boxes.splice(this.dragBoxElementIndex, 1)[0];
+      }, 200); // 0.2s: transition
 
       // Visual feedback
       this.createGhostElement(boxElement);
@@ -252,10 +261,17 @@ export class DayComponent implements OnInit {
           let boxElementPosition = boxElement.getBoundingClientRect();
 
           if (newBoxPosition > boxElementPosition.top) {
-            let boxElementIndex = parseInt(boxElement.id.split('-')[1]) - 1;
+            let boxElementIndex = parseInt(boxElement.id.split('-')[1]) - 1; // new position
 
-            let currentBoxArrayElement = this.boxes.splice(this.dragBoxElementIndex, 1)[0];
-            this.boxes.splice(boxElementIndex, 0, currentBoxArrayElement);
+            let currentBoxArrayElementHeight = this.dragBoxElement!.height;
+            this.dragBoxElement!.height = 0;
+            this.boxes.splice(boxElementIndex, 0, this.dragBoxElement!);
+
+            // re-enables the transition
+            setTimeout(() => {
+              this.boxes[boxElementIndex].height = currentBoxArrayElementHeight;
+            }, 1);
+
             break;
           }
         }
