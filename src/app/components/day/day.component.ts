@@ -50,6 +50,16 @@ export class DayComponent implements OnInit {
     document.onmousemove = this.getMousePosition;
   }
 
+  getBoxClassName = (boxIndex: number) => {
+    let className = 'box';
+
+    let boxGroup = this.boxes[boxIndex].group;
+    if (boxGroup) {
+      className += ' ' + `group-${boxGroup}`;
+    }
+    return className;
+  };
+
   getHeightOfOtherBoxes = () => {
     let heights = 0;
     this.boxes.forEach((box, index) => {

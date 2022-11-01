@@ -7,7 +7,7 @@
     <div
       *ngFor="let box of boxes; index as index"
       [ngStyle]="{ height: box.height + 'px' }"
-      [class]="'box' + ' ' + 'group-' + box.group"
+      [class]="getBoxClassName(index)"
       [id]="'box-' + (index + 1)"
       (mousemove)="handleMouseMove($event)"
       (mousedown)="dragBox($event)"
