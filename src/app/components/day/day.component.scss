@@ -37,7 +37,8 @@
   border-left: 5px solid #c6c2bb;
   color: white;
 
-  transition: 0.04s ease-out height;
+  transition: 0.2s ease-out height, 0.2s ease-out padding;
+
   cursor: grab;
 
   user-select: none;
