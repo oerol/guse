@@ -41,6 +41,8 @@ export class DayComponent implements OnInit {
   USER_DAY_END = 23;
   USER_DAY_TICKS: number[] = [];
 
+  isResizing = false;
+
   constructor() {
     let userDayLength = this.USER_DAY_END - this.USER_DAY_START + 1;
     this.USER_DAY_TICKS = Array.from({ length: userDayLength }, (_, i) => i + this.USER_DAY_START);
@@ -96,6 +98,7 @@ export class DayComponent implements OnInit {
   };
 
   onMouseUp = (e: MouseEvent) => {
+    this.isResizing = false;
     this.removeGlobalCursor('ns-resize');
 
     document.removeEventListener('mousemove', this.onMouseMove);
@@ -112,6 +115,8 @@ export class DayComponent implements OnInit {
   startBoxResize = (e: MouseEvent) => {
     e.preventDefault();
     this.setCurrentBoxIndex(e.target as HTMLDivElement);
+
+    this.isResizing = true;
 
     this.setGlobalCursor('ns-resize');
 
@@ -139,7 +144,7 @@ export class DayComponent implements OnInit {
     }
   }
 
-  showContextMenu(targetElement: HTMLDivElement) {
+  showContextMenu(targetElement: HTMLElement) {
     let contextMenuElement = document.getElementById('box-context-menu') as HTMLDivElement;
     let boxElementSize = targetElement.getBoundingClientRect();
 
@@ -148,20 +153,32 @@ export class DayComponent implements OnInit {
     contextMenuElement.style.top = `${boxElementSize.top}px`;
   }
 
+  setContextMenuBoxElementIndex = (hoverElement: HTMLElement) => {
+    let isBoxElement = hoverElement.classList.contains('box');
+
+    let boxElement: HTMLElement;
+    if (isBoxElement) {
+      boxElement = hoverElement;
+    } else {
+      boxElement = hoverElement.parentElement!;
+    }
+
+    let boxElementID = boxElement.id.split('-')[1];
+    this.contextMenuBoxElementIndex = parseInt(boxElementID) - 1;
+  };
+
   handleMouseMove = (e: MouseEvent) => {
-    let boxElement = e.target as HTMLDivElement;
+    if (!this.isResizing) {
+      let hoverElement = e.target as HTMLDivElement;
+      this.setContextMenuBoxElementIndex(hoverElement);
+      let boxElement = document.getElementsByClassName('box')[this.contextMenuBoxElementIndex] as HTMLElement;
 
-    // Use the box element to place the context menu (and not the child elements)
-    if (boxElement.classList.contains('box')) {
       this.showContextMenu(boxElement);
-
-      let boxElementID = boxElement.id.split('-')[1];
-      this.contextMenuBoxElementIndex = parseInt(boxElementID);
     }
   };
 
   changeCategory = (color: string) => {
-    this.boxes[this.contextMenuBoxElementIndex - 1].group = color;
+    this.boxes[this.contextMenuBoxElementIndex].group = color;
   };
 
   // https://stackoverflow.com/questions/10750582/global-override-of-mouse-cursor-with-javascript
@@ -252,6 +269,6 @@ export class DayComponent implements OnInit {
   };
 
   removeBox = () => {
-    this.boxes.splice(this.contextMenuBoxElementIndex - 1, 1);
+    this.boxes.splice(this.contextMenuBoxElementIndex, 1);
   };
 }
