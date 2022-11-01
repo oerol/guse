@@ -193,8 +193,8 @@ export class DayComponent implements OnInit {
     document.getElementById(`global-cursor-style-${cursor}`)!.remove();
   };
 
-  createGhostElement = (copyElement: HTMLElement) => {
-    let ghostBoxElement = copyElement.cloneNode(true) as HTMLElement;
+  createGhostElement = (originalElement: HTMLElement) => {
+    let ghostBoxElement = originalElement.cloneNode(true) as HTMLElement;
     ghostBoxElement.id = 'box-ghost';
     ghostBoxElement.style.position = 'absolute';
     document.body.append(ghostBoxElement);
@@ -203,10 +203,10 @@ export class DayComponent implements OnInit {
   handleGhostElement = (e: MouseEvent) => {
     let ghostBoxElement = document.getElementById('box-ghost') as HTMLElement;
     let boxWidth = 200;
-    let boxHeight = this.boxes[this.dragBoxElementIndex].height;
 
-    ghostBoxElement.style.top = `${e.clientY - boxHeight / 2}px`;
+    ghostBoxElement.style.top = `${e.clientY - this.MIN_BOX_HEIGHT / 2}px`;
     ghostBoxElement.style.left = `${e.clientX - boxWidth / 2}px`;
+    ghostBoxElement.style.height = `${this.MIN_BOX_HEIGHT}px`;
   };
 
   dragBox = (e: MouseEvent) => {
