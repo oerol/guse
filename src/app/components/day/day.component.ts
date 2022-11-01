@@ -96,6 +96,8 @@ export class DayComponent implements OnInit {
   };
 
   onMouseUp = (e: MouseEvent) => {
+    this.removeGlobalCursor('ns-resize');
+
     document.removeEventListener('mousemove', this.onMouseMove);
     document.removeEventListener('mouseup', this.onMouseUp);
   };
@@ -106,9 +108,12 @@ export class DayComponent implements OnInit {
     this.currentBoxIndex = parseInt(boxElementID) - 1;
   };
 
+  //* Gets executed on drag-handle mousedown */
   handleMouseDown = (e: MouseEvent) => {
     e.preventDefault();
     this.setCurrentBoxIndex(e.target as HTMLDivElement);
+
+    this.setGlobalCursor('ns-resize');
 
     document.addEventListener('mousemove', this.onMouseMove);
     document.addEventListener('mouseup', this.onMouseUp);
