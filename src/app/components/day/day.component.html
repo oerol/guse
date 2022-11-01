@@ -16,7 +16,7 @@
       <div class="box-duration">
         {{ getBoxDuration(box.height) }}
       </div>
-      <div class="lower-drag-handle drag-handle" (mousedown)="handleMouseDown($event)"></div>
+      <div class="lower-drag-handle drag-handle" (mousedown)="startBoxResize($event)"></div>
     </div>
   </div>
   <div id="box-context-menu">

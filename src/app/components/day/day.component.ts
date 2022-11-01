@@ -109,7 +109,7 @@ export class DayComponent implements OnInit {
   };
 
   //* Gets executed on drag-handle mousedown */
-  handleMouseDown = (e: MouseEvent) => {
+  startBoxResize = (e: MouseEvent) => {
     e.preventDefault();
     this.setCurrentBoxIndex(e.target as HTMLDivElement);
 
