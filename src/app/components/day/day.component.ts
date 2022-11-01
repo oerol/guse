@@ -37,7 +37,14 @@ export class DayComponent implements OnInit {
 
   DAY_LENGTH = this.TIME_SPENT_AWAKE * 2 * this.HEIGHT_INCREMENT;
 
-  constructor() {}
+  USER_DAY_START = 7;
+  USER_DAY_END = 23;
+  USER_DAY_TICKS: number[] = [];
+
+  constructor() {
+    let userDayLength = this.USER_DAY_END - this.USER_DAY_START + 1;
+    this.USER_DAY_TICKS = Array.from({ length: userDayLength }, (_, i) => i + this.USER_DAY_START);
+  }
 
   ngOnInit(): void {
     document.onmousemove = this.getMousePosition;
