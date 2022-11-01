@@ -193,6 +193,22 @@ export class DayComponent implements OnInit {
     document.getElementById(`global-cursor-style-${cursor}`)!.remove();
   };
 
+  createGhostElement = (copyElement: HTMLElement) => {
+    let ghostBoxElement = copyElement.cloneNode(true) as HTMLElement;
+    ghostBoxElement.id = 'box-ghost';
+    ghostBoxElement.style.position = 'absolute';
+    document.body.append(ghostBoxElement);
+  };
+
+  handleGhostElement = (e: MouseEvent) => {
+    let ghostBoxElement = document.getElementById('box-ghost') as HTMLElement;
+    let boxWidth = 200;
+    let boxHeight = this.boxes[this.dragBoxElementIndex].height;
+
+    ghostBoxElement.style.top = `${e.clientY - boxHeight / 2}px`;
+    ghostBoxElement.style.left = `${e.clientX - boxWidth / 2}px`;
+  };
+
   dragBox = (e: MouseEvent) => {
     let boxElement = e.target as HTMLElement;
 
@@ -203,17 +219,8 @@ export class DayComponent implements OnInit {
       this.setGlobalCursor('grabbing');
 
       // Visual feedback
-
-      let ghostBoxElement = boxElement.cloneNode(true) as HTMLElement;
-      ghostBoxElement.id = 'box-ghost';
-      ghostBoxElement.style.position = 'absolute';
-      document.body.append(ghostBoxElement);
-
-      let boxWidth = 200;
-      let boxHeight = this.boxes[this.dragBoxElementIndex].height;
-
-      ghostBoxElement.style.top = `${e.clientY - boxHeight / 2}px`;
-      ghostBoxElement.style.left = `${e.clientX - boxWidth / 2}px`;
+      this.createGhostElement(boxElement);
+      this.handleGhostElement(e);
 
       document.addEventListener('mousemove', this.ghostDragBox);
       document.addEventListener('mouseup', this.endDragBox);
@@ -221,13 +228,7 @@ export class DayComponent implements OnInit {
   };
 
   ghostDragBox = (e: MouseEvent) => {
-    let ghostBoxElement = document.getElementById('box-ghost') as HTMLElement;
-
-    let boxWidth = 200;
-    let boxHeight = this.boxes[this.dragBoxElementIndex].height;
-
-    ghostBoxElement.style.top = `${e.clientY - boxHeight / 2}px`;
-    ghostBoxElement.style.left = `${e.clientX - boxWidth / 2}px`;
+    this.handleGhostElement(e);
   };
 
   endDragBox = (e: MouseEvent) => {
