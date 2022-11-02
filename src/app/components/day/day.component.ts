@@ -290,6 +290,7 @@ export class DayComponent implements OnInit {
   };
 
   removeBox = () => {
-    this.boxes.splice(this.contextMenuBoxElementIndex, 1);
+    let boxElement = document.getElementsByClassName('box')[this.contextMenuBoxElementIndex] as HTMLElement;
+    this.fadeOutBox(boxElement, this.contextMenuBoxElementIndex);
   };
 }
