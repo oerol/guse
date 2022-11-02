@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="209.21" height="22.244" viewBox="0 0 209.21 22.244">
+  <g id="insertion-indicator" transform="translate(-100.822 -262.528)">
+    <path id="Pfad_2" data-name="Pfad 2" d="M320.505,264.061s.715,10.6-9.169,10.539" transform="translate(-11 -1.001)" fill="none" stroke="red" stroke-linecap="round" stroke-width="1"/>
+    <path id="Pfad_4" data-name="Pfad 4" d="M311.348,264.061s-.715,10.6,9.169,10.539" transform="translate(-210 -1.001)" fill="none" stroke="red" stroke-linecap="round" stroke-width="1"/>
+    <path id="Pfad_3" data-name="Pfad 3" d="M320.505,274.6s.715-10.6-9.169-10.539" transform="translate(-11 9.639)" fill="none" stroke="red" stroke-linecap="round" stroke-width="1"/>
+    <path id="Pfad_5" data-name="Pfad 5" d="M311.348,274.6s-.715-10.6,9.169-10.539" transform="translate(-210 9.639)" fill="none" stroke="red" stroke-linecap="round" stroke-width="1"/>
+    <line id="Linie_1" data-name="Linie 1" x1="190" transform="translate(110.5 273.65)" fill="none" stroke="red" stroke-width="1.1"/>
+  </g>
+</svg>
