@@ -217,7 +217,7 @@ export class DayComponent implements OnInit {
     setTimeout(() => {
       boxElement.style.border = 'none';
       this.dragBoxElement = this.boxes.splice(boxElementIndex, 1)[0];
-    }, 200); // 0.2s: transition
+    }, 200 - 50); // 0.2s: transition
   };
 
   dragBox = (e: MouseEvent) => {
