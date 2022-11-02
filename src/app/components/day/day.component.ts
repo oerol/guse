@@ -211,6 +211,15 @@ export class DayComponent implements OnInit {
 
   dragBoxElement: Box | undefined;
 
+  fadeOutBox = (boxElement: HTMLElement, boxElementIndex: number) => {
+    boxElement.style.height = '0px';
+    boxElement.style.padding = '0px';
+    setTimeout(() => {
+      boxElement.style.border = 'none';
+      this.dragBoxElement = this.boxes.splice(boxElementIndex, 1)[0];
+    }, 200); // 0.2s: transition
+  };
+
   dragBox = (e: MouseEvent) => {
     let boxElement = e.target as HTMLElement;
 
@@ -220,12 +229,7 @@ export class DayComponent implements OnInit {
 
       this.setGlobalCursor('grabbing');
 
-      boxElement.style.height = '0px';
-      boxElement.style.padding = '0px';
-      setTimeout(() => {
-        boxElement.style.border = 'none';
-        this.dragBoxElement = this.boxes.splice(this.dragBoxElementIndex, 1)[0];
-      }, 200); // 0.2s: transition
+      this.fadeOutBox(boxElement, this.dragBoxElementIndex);
 
       // Visual feedback
       this.createGhostElement(boxElement);
