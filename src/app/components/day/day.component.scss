@@ -110,7 +110,8 @@
   background-color: rgb(160, 160, 0);
 }
 
-#box-context-menu {
+#box-context-menu,
+#insertion-indicator {
   display: none;
   position: absolute;
 }

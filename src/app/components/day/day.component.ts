@@ -240,12 +240,66 @@ export class DayComponent implements OnInit {
     }
   };
 
+  handleInsertionElement = (e: MouseEvent) => {
+    let dragArea = 10;
+
+    let clientY = e.clientY;
+    let boxElementBoundingBoxes = [];
+
+    let boxElements = Array.from(document.getElementsByClassName('box'));
+    for (let boxElement of boxElements) {
+      if (boxElement.id !== 'box-ghost') {
+        let boundingBox = boxElement.getBoundingClientRect();
+        boxElementBoundingBoxes.push(boundingBox);
+      }
+    }
+
+    let insertionElement = document.getElementById('insertion-indicator') as HTMLElement;
+    let insertionElementHeight = insertionElement.clientHeight;
+    let insertionElementSegmentWidth = 6;
+
+    let ghostBoxElement = document.getElementById('box-ghost') as HTMLElement;
+
+    for (let i = 0; i < boxElementBoundingBoxes.length - 1; i++) {
+      let highestBox = boxElementBoundingBoxes[0];
+      let lowestBox = boxElementBoundingBoxes[boxElementBoundingBoxes.length - 1];
+      const boundingBox = boxElementBoundingBoxes[i];
+      const nextBoundingBox = boxElementBoundingBoxes[i + 1];
+
+      if (clientY < highestBox.top) {
+        let insertionElementPosition = highestBox.top - dragArea;
+        insertionElement.style.display = 'block';
+        insertionElement.style.top = `${insertionElementPosition}px`;
+        insertionElement.style.left = `${highestBox.left - insertionElementSegmentWidth}px`;
+      }
+      if (clientY > lowestBox.bottom) {
+        let insertionElementPosition = lowestBox.bottom - dragArea;
+        insertionElement.style.display = 'block';
+        insertionElement.style.top = `${insertionElementPosition}px`;
+        insertionElement.style.left = `${lowestBox.left - insertionElementSegmentWidth}px`;
+      }
+      if (clientY > boundingBox.bottom - dragArea && clientY < nextBoundingBox.top + dragArea) {
+        let insertionElementPosition = boundingBox.bottom - insertionElementHeight / 2;
+
+        insertionElement.style.display = 'block';
+        insertionElement.style.top = `${insertionElementPosition}px`;
+        insertionElement.style.left = `${boundingBox.left - insertionElementSegmentWidth}px`;
+
+        ghostBoxElement.style.opacity = '1';
+      }
+    }
+  };
+
   ghostDragBox = (e: MouseEvent) => {
+    this.handleInsertionElement(e);
     this.handleGhostElement(e);
   };
 
   endDragBox = (e: MouseEvent) => {
     this.removeGlobalCursor('grabbing');
+
+    let insertionElement = document.getElementById('insertion-indicator') as HTMLElement;
+    insertionElement.style.display = 'none';
 
     let newBoxPosition = e.clientY;
 
