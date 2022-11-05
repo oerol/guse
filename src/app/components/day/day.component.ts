@@ -261,22 +261,22 @@ export class DayComponent implements OnInit {
     let ghostBoxElement = document.getElementById('box-ghost') as HTMLElement;
 
     for (let i = 0; i < boxElementBoundingBoxes.length - 1; i++) {
-      let highestBox = boxElementBoundingBoxes[0];
-      let lowestBox = boxElementBoundingBoxes[boxElementBoundingBoxes.length - 1];
+      let firstBox = boxElementBoundingBoxes[0];
+      let lastBox = boxElementBoundingBoxes[boxElementBoundingBoxes.length - 1];
       const boundingBox = boxElementBoundingBoxes[i];
       const nextBoundingBox = boxElementBoundingBoxes[i + 1];
 
-      if (clientY < highestBox.top) {
-        let insertionElementPosition = highestBox.top - dragArea;
+      if (clientY < firstBox.top) {
+        let insertionElementPosition = firstBox.top - dragArea;
         insertionElement.style.display = 'block';
         insertionElement.style.top = `${insertionElementPosition}px`;
-        insertionElement.style.left = `${highestBox.left - insertionElementSegmentWidth}px`;
+        insertionElement.style.left = `${firstBox.left - insertionElementSegmentWidth}px`;
       }
-      if (clientY > lowestBox.bottom) {
-        let insertionElementPosition = lowestBox.bottom - dragArea;
+      if (clientY > lastBox.bottom) {
+        let insertionElementPosition = lastBox.bottom - dragArea;
         insertionElement.style.display = 'block';
         insertionElement.style.top = `${insertionElementPosition}px`;
-        insertionElement.style.left = `${lowestBox.left - insertionElementSegmentWidth}px`;
+        insertionElement.style.left = `${lastBox.left - insertionElementSegmentWidth}px`;
       }
       if (clientY > boundingBox.bottom - dragArea && clientY < nextBoundingBox.top + dragArea) {
         let insertionElementPosition = boundingBox.bottom - insertionElementHeight / 2;
