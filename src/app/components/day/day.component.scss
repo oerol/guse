@@ -118,3 +118,44 @@
   display: none;
   position: absolute;
 }
+
+#box-context-menu {
+  background-color: rgba(0, 0, 0, 0.8);
+  border-radius: 5px;
+  width: 150px;
+  height: 30px;
+
+  box-sizing: border-box;
+  padding: 10px;
+
+  gap: 5px;
+
+  div {
+    height: 10px;
+    width: 10px;
+    border-radius: 2px;
+  }
+}
+
+.first-category {
+  background-color: red;
+}
+.second-category {
+  background-color: green;
+}
+.third-category {
+  background-color: rgb(109, 109, 255);
+}
+
+.remove-box {
+  background-color: white;
+  margin-left: auto;
+
+  &::after {
+    content: 'x';
+    position: relative;
+    top: -6px;
+
+    color: red;
+  }
+}

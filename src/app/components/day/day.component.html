@@ -20,10 +20,10 @@
     </div>
   </div>
   <div id="box-context-menu">
-    <span (click)="changeCategory('red')">r</span>
-    <span (click)="changeCategory('green')">g</span>
-    <span (click)="changeCategory('blue')">b</span>
-    <span (click)="removeBox()">&nbsp; x</span>
+    <div class="first-category" (click)="changeCategory('red')"></div>
+    <div class="second-category" (click)="changeCategory('green')"></div>
+    <div class="third-category" (click)="changeCategory('blue')"></div>
+    <div class="remove-box" (click)="removeBox()"></div>
   </div>
 </div>
 <img id="insertion-indicator" src="/assets/insertion-indicator.svg" alt="" />

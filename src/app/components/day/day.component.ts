@@ -148,9 +148,9 @@ export class DayComponent implements OnInit {
     let contextMenuElement = document.getElementById('box-context-menu') as HTMLDivElement;
     let boxElementSize = targetElement.getBoundingClientRect();
 
-    contextMenuElement.style.display = 'block';
+    contextMenuElement.style.display = 'flex';
     contextMenuElement.style.left = `${boxElementSize.right + 10}px`;
-    contextMenuElement.style.top = `${boxElementSize.top}px`;
+    contextMenuElement.style.top = `${boxElementSize.top + 2}px`; // 2: box border
   }
 
   setContextMenuBoxElementIndex = (hoverElement: HTMLElement) => {
