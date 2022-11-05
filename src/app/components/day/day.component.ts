@@ -241,53 +241,23 @@ export class DayComponent implements OnInit {
   };
 
   handleInsertionElement = (e: MouseEvent) => {
-    let dragArea = 10;
-
     let clientY = e.clientY;
-    let boxElementBoundingBoxes = [];
-
     let boxElements = Array.from(document.getElementsByClassName('box'));
+    boxElements = boxElements.filter((boxElement) => boxElement.id !== 'box-ghost');
+
+    let ghostElement = document.getElementById('box-ghost') as HTMLElement;
+
     for (let boxElement of boxElements) {
-      if (boxElement.id !== 'box-ghost') {
-        let boundingBox = boxElement.getBoundingClientRect();
-        boxElementBoundingBoxes.push(boundingBox);
+      let boxElementBoundingBox = boxElement.getBoundingClientRect();
+      let insertableAbove = clientY >= boxElementBoundingBox.top && clientY <= boxElementBoundingBox.top + 10;
+      let insertableBelow = clientY >= boxElementBoundingBox.bottom - 10 && clientY <= boxElementBoundingBox.bottom;
+
+      if (insertableAbove || insertableBelow) {
+        ghostElement.style.opacity = '0.85';
+        return;
       }
     }
-
-    let insertionElement = document.getElementById('insertion-indicator') as HTMLElement;
-    let insertionElementHeight = insertionElement.clientHeight;
-    let insertionElementSegmentWidth = 6;
-
-    let ghostBoxElement = document.getElementById('box-ghost') as HTMLElement;
-
-    for (let i = 0; i < boxElementBoundingBoxes.length - 1; i++) {
-      let firstBox = boxElementBoundingBoxes[0];
-      let lastBox = boxElementBoundingBoxes[boxElementBoundingBoxes.length - 1];
-      const boundingBox = boxElementBoundingBoxes[i];
-      const nextBoundingBox = boxElementBoundingBoxes[i + 1];
-
-      if (clientY < firstBox.top) {
-        let insertionElementPosition = firstBox.top - dragArea;
-        insertionElement.style.display = 'block';
-        insertionElement.style.top = `${insertionElementPosition}px`;
-        insertionElement.style.left = `${firstBox.left - insertionElementSegmentWidth}px`;
-      }
-      if (clientY > lastBox.bottom) {
-        let insertionElementPosition = lastBox.bottom - dragArea;
-        insertionElement.style.display = 'block';
-        insertionElement.style.top = `${insertionElementPosition}px`;
-        insertionElement.style.left = `${lastBox.left - insertionElementSegmentWidth}px`;
-      }
-      if (clientY > boundingBox.bottom - dragArea && clientY < nextBoundingBox.top + dragArea) {
-        let insertionElementPosition = boundingBox.bottom - insertionElementHeight / 2;
-
-        insertionElement.style.display = 'block';
-        insertionElement.style.top = `${insertionElementPosition}px`;
-        insertionElement.style.left = `${boundingBox.left - insertionElementSegmentWidth}px`;
-
-        ghostBoxElement.style.opacity = '1';
-      }
-    }
+    ghostElement.style.opacity = '0.5';
   };
 
   ghostDragBox = (e: MouseEvent) => {
