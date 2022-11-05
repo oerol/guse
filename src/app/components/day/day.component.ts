@@ -197,6 +197,7 @@ export class DayComponent implements OnInit {
     let ghostBoxElement = originalElement.cloneNode(true) as HTMLElement;
     ghostBoxElement.id = 'box-ghost';
     ghostBoxElement.style.position = 'absolute';
+    ghostBoxElement.style.padding = '5px';
     document.body.append(ghostBoxElement);
   };
 
