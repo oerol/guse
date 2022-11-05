@@ -202,7 +202,7 @@ export class DayComponent implements OnInit {
 
   handleGhostElement = (e: MouseEvent) => {
     let ghostBoxElement = document.getElementById('box-ghost') as HTMLElement;
-    let boxWidth = 200;
+    let boxWidth = 200; // Todo
 
     ghostBoxElement.style.top = `${e.clientY - this.MIN_BOX_HEIGHT / 2}px`;
     ghostBoxElement.style.left = `${e.clientX - boxWidth / 2}px`;
@@ -253,16 +253,18 @@ export class DayComponent implements OnInit {
       let insertableBelow = clientY >= boxElementBoundingBox.bottom - 10 && clientY <= boxElementBoundingBox.bottom;
 
       if (insertableAbove || insertableBelow) {
-        ghostElement.style.opacity = '0.85';
+        ghostElement.style.opacity = '0.95';
+        ghostElement.style.boxShadow = `0px 0px 10px 5px rgba(0,0,0,0.4)`;
         return;
       }
     }
+    ghostElement.style.boxShadow = `none`;
     ghostElement.style.opacity = '0.5';
   };
 
   ghostDragBox = (e: MouseEvent) => {
-    this.handleInsertionElement(e);
     this.handleGhostElement(e);
+    this.handleInsertionElement(e);
   };
 
   endDragBox = (e: MouseEvent) => {
