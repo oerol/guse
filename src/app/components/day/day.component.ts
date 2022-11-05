@@ -240,6 +240,8 @@ export class DayComponent implements OnInit {
     }
   };
 
+  insertable = false;
+
   handleInsertionElement = (e: MouseEvent) => {
     let clientY = e.clientY;
     let boxElements = Array.from(document.getElementsByClassName('box'));
@@ -255,11 +257,15 @@ export class DayComponent implements OnInit {
       if (insertableAbove || insertableBelow) {
         ghostElement.style.opacity = '0.95';
         ghostElement.style.boxShadow = `0px 0px 10px 5px rgba(0,0,0,0.4)`;
+
+        this.insertable = true;
         return;
       }
     }
     ghostElement.style.boxShadow = `none`;
     ghostElement.style.opacity = '0.5';
+
+    this.insertable = false;
   };
 
   ghostDragBox = (e: MouseEvent) => {
@@ -270,43 +276,39 @@ export class DayComponent implements OnInit {
   endDragBox = (e: MouseEvent) => {
     this.removeGlobalCursor('grabbing');
 
-    let insertionElement = document.getElementById('insertion-indicator') as HTMLElement;
-    insertionElement.style.display = 'none';
-
     let newBoxPosition = e.clientY;
 
     let boxElements = Array.from(document.getElementsByClassName('box'));
-    let firstBoxElementPosition = boxElements[0].getBoundingClientRect();
+    boxElements = boxElements.filter((boxElement) => boxElement.id !== 'box-ghost');
 
-    if (newBoxPosition < firstBoxElementPosition.top) {
-      let currentBoxArrayElement = this.boxes.splice(this.dragBoxElementIndex, 1)[0];
-      let boxElementIndex = parseInt(boxElements[0].id.split('-')[1]) - 1;
+    let currentBoxArrayElementHeight = this.dragBoxElement!.height;
+    this.dragBoxElement!.height = 0;
 
-      this.boxes.splice(boxElementIndex, 0, currentBoxArrayElement);
-    } else {
-      boxElements.reverse();
+    let newBoxElementIndex: number = 0;
+    if (this.insertable) {
+      let lastBoxElement = boxElements[boxElements.length - 1];
+      let lastBoxElementBoundingBox = lastBoxElement.getBoundingClientRect();
 
+      if (newBoxPosition >= lastBoxElementBoundingBox.top) {
+        newBoxElementIndex = boxElements.length;
+      }
       for (let boxElement of boxElements) {
-        if (!boxElement.id.includes('ghost')) {
-          let boxElementPosition = boxElement.getBoundingClientRect();
+        let boxElementBoundingBox = boxElement.getBoundingClientRect();
 
-          if (newBoxPosition > boxElementPosition.top) {
-            let boxElementIndex = parseInt(boxElement.id.split('-')[1]) - 1; // new position
-
-            let currentBoxArrayElementHeight = this.dragBoxElement!.height;
-            this.dragBoxElement!.height = 0;
-            this.boxes.splice(boxElementIndex, 0, this.dragBoxElement!);
-
-            // re-enables the transition
-            setTimeout(() => {
-              this.boxes[boxElementIndex].height = currentBoxArrayElementHeight;
-            }, 1);
-
-            break;
-          }
+        if (newBoxPosition <= boxElementBoundingBox.bottom - 10) {
+          newBoxElementIndex = parseInt(boxElement.id.split('-')[1]) - 1; // new position
+          break;
         }
       }
+    } else {
+      newBoxElementIndex = this.dragBoxElementIndex;
     }
+
+    this.boxes.splice(newBoxElementIndex, 0, this.dragBoxElement!);
+
+    setTimeout(() => {
+      this.boxes[newBoxElementIndex].height = currentBoxArrayElementHeight;
+    }, 1);
 
     let ghostBoxElement = document.getElementById('box-ghost') as HTMLElement;
     ghostBoxElement.remove();
