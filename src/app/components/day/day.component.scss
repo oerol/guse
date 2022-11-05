@@ -54,7 +54,7 @@
 #box-ghost {
   border: none;
   border-left: 5px solid #c6c2bb;
-  transition: 0.2s ease-out width, 0.2s ease-out opacity;
+  transition: 0.2s ease-out width, 0.2s ease-out opacity, 0.2s ease-out box-shadow;
   opacity: 0.5;
 }
 
