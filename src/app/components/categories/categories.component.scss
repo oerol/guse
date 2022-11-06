@@ -29,6 +29,7 @@
 }
 
 h4 {
+  cursor: pointer;
   margin-top: 0;
   margin-bottom: 5px;
   color: rgb(121, 118, 118);
@@ -50,6 +51,8 @@ h4 {
 #menu-item-arrow {
   width: 6px;
   margin-right: 5px;
+
+  transition: 0.2s ease-out transform;
 }
 
 .create-new-category-item {

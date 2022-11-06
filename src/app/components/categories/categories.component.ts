@@ -12,11 +12,22 @@ export class CategoriesComponent implements OnInit {
 
   creatingNewCategoryItem = false;
 
+  isVisible = true;
+
   CATEGORY_ITEMS = [
     { color: 'red', name: 'Hobbies' },
     { color: 'green', name: 'Health' },
     { color: 'blue', name: 'Work' },
   ];
+
+  handleCategoriesVisibility = () => {
+    this.isVisible = !this.isVisible;
+
+    let arrowElement = document.getElementById('menu-item-arrow') as HTMLElement;
+
+    let rotation = this.isVisible ? 'rotate(0deg)' : 'rotate(90deg)';
+    arrowElement.style.transform = rotation;
+  };
 
   createNewCategoryItem = (e: MouseEvent) => {
     this.creatingNewCategoryItem = true;
