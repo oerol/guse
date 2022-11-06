@@ -51,3 +51,12 @@ h4 {
   width: 6px;
   margin-right: 5px;
 }
+
+.create-new-category-item {
+  cursor: pointer;
+}
+
+[contenteditable] {
+  outline: 0px solid transparent;
+  cursor: pointer;
+}
