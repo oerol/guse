@@ -1,0 +1,13 @@
+<div id="categories-wrapper">
+  <h4>> CATEGORIES</h4>
+  <div *ngFor="let categoryItem of CATEGORY_ITEMS" class="category-item">
+    <div [class]="'category-item-color' + ' ' + categoryItem.color"></div>
+    <div class="category-item-name">{{ categoryItem.name }}</div>
+  </div>
+  <div *ngIf="creatingNewCategoryItem" class="new-category-item">
+    <div class="category-item-color white"></div>
+    <input type="text" name="" id="" (keydown.enter)="onKeyDownEvent($event)" />
+  </div>
+
+  <div class="create-new-category-item" (click)="createNewCategoryItem($event)">+ Add new</div>
+</div>
