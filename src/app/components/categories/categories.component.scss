@@ -42,8 +42,9 @@ h4 {
 
   input {
     width: 80px;
+    outline: none;
     border: none;
-    outline: 1px solid black;
+    border-bottom: 1px solid gray;
     background-color: #e2ded9;
   }
 }
