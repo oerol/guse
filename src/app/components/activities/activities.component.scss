@@ -1,0 +1,70 @@
+#activities-wrapper {
+  box-sizing: border-box;
+}
+
+.activity-item {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.activity-item-color {
+  width: 15px;
+  height: 15px;
+  border-radius: 4px;
+
+  &.red {
+    background-color: red;
+  }
+  &.green {
+    background-color: green;
+  }
+  &.blue {
+    background-color: blue;
+  }
+  &.white {
+    background-color: white;
+  }
+}
+
+h4 {
+  cursor: pointer;
+  margin-top: 0;
+  margin-bottom: 5px;
+  color: rgb(121, 118, 118);
+}
+
+.new-activity-item {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+
+  input {
+    width: 80px;
+    outline: none;
+    border: none;
+    border-bottom: 1px solid gray;
+    background-color: #e2ded9;
+  }
+}
+
+.menu-item {
+  user-select: none;
+}
+
+#menu-item-arrow {
+  width: 6px;
+  margin-right: 5px;
+
+  transition: 0.2s ease-out transform;
+}
+
+.create-new-activity-item {
+  cursor: pointer;
+}
+
+[contenteditable] {
+  outline: 0px solid transparent;
+  cursor: text;
+}
