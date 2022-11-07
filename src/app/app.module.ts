@@ -5,13 +5,15 @@ import { AppComponent } from './app.component';
 import { DayComponent } from './components/day/day.component';
 import { CategoriesComponent } from './components/categories/categories.component';
 import { ActivitiesComponent } from './components/activities/activities.component';
+import { SideMenuComponent } from './components/side-menu/side-menu.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     DayComponent,
     CategoriesComponent,
-    ActivitiesComponent
+    ActivitiesComponent,
+    SideMenuComponent
   ],
   imports: [
     BrowserModule
