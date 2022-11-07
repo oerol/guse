@@ -3,9 +3,14 @@
     <img id="activities-menu-item-arrow" src="/assets/menu-item-arrow.svg" alt="" />ACTIVITIES
   </h4>
   <div *ngIf="isVisible" class="activities-content">
-    <div *ngFor="let activityItem of ACTIVITY_ITEMS" class="activity-item">
+    <div
+      *ngFor="let activityItem of ACTIVITY_ITEMS; index as index"
+      [id]="'activity-' + (index + 1)"
+      class="activity-item"
+      (mousedown)="handleMouseDown($event)"
+    >
       <div [class]="'activity-item-color' + ' ' + getColorForActivity(activityItem.category)"></div>
-      <div class="activity-item-name" contenteditable="true">{{ activityItem.name }}</div>
+      <div class="activity-item-name">{{ activityItem.name }}</div>
     </div>
     <div *ngIf="creatingNewActivityItem" class="new-activity-item">
       <div class="activity-item-color white"></div>
@@ -13,5 +18,6 @@
     </div>
 
     <div class="create-new-activity-item" (click)="createNewActivityItem($event)">+ Add new</div>
+    <div id="activity-box-ghost"></div>
   </div>
 </div>

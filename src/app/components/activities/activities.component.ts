@@ -67,4 +67,49 @@ export class ActivitiesComponent implements OnInit {
 
     this.creatingNewActivityItem = false;
   };
+
+  activityIndex = 0;
+
+  handleMouseDown = (e: MouseEvent) => {
+    let activityElement = e.target as HTMLElement;
+
+    // Handles child elements
+    if (activityElement.id === '') {
+      activityElement = activityElement.parentElement as HTMLElement;
+    }
+
+    this.activityIndex = parseInt(activityElement.id.split('-')[1]) - 1;
+    let activityObject = this.ACTIVITY_ITEMS[this.activityIndex];
+    let color = this.getColorForActivity(activityObject.category);
+
+    let dragBoxElement = document.getElementById('activity-box-ghost') as HTMLElement;
+
+    dragBoxElement.innerText = activityObject.name;
+    dragBoxElement.style.display = 'block';
+    dragBoxElement.classList.add(color);
+
+    document.addEventListener('mousemove', this.handleMouseMove);
+    document.addEventListener('mouseup', this.handleMouseUp);
+  };
+
+  handleMouseMove = (e: MouseEvent) => {
+    let dragBoxElement = document.getElementById('activity-box-ghost') as HTMLElement;
+    let height = 25;
+    dragBoxElement.style.top = `${e.clientY - height / 2}px`;
+    dragBoxElement.style.left = `${e.clientX + 5}px`;
+  };
+
+  handleMouseUp = (e: MouseEvent) => {
+    let dragBoxElement = document.getElementById('activity-box-ghost') as HTMLElement;
+    dragBoxElement.innerText = '';
+    dragBoxElement.style.display = 'none';
+
+    let activityObject = this.ACTIVITY_ITEMS[this.activityIndex];
+    let color = this.getColorForActivity(activityObject.category);
+
+    dragBoxElement.classList.remove(color);
+
+    document.removeEventListener('mousemove', this.handleMouseMove);
+    document.removeEventListener('mouseup', this.handleMouseUp);
+  };
 }
