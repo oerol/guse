@@ -15,9 +15,12 @@ export class CategoriesComponent implements OnInit {
   isVisible = true;
 
   CATEGORY_ITEMS = [
-    { color: 'red', name: 'Hobbies' },
+    { color: 'blue', name: 'Productivity' },
     { color: 'green', name: 'Health' },
-    { color: 'blue', name: 'Work' },
+    { color: 'violet', name: 'Language' },
+    { color: 'yellow', name: 'Music' },
+    { color: 'gray', name: 'Work' },
+    { color: 'lightblue', name: 'Passion' },
   ];
 
   handleCategoriesVisibility = () => {
