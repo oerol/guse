@@ -6,9 +6,8 @@ main {
 }
 
 .vertical-seperator {
-  position: relative;
-  top: -20px;
   width: 1px;
-  height: 950px;
+  height: 947px;
   background-color: gray;
+  margin: -20px 0px;
 }
