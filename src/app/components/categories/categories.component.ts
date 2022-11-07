@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-categories',
@@ -6,6 +6,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./categories.component.scss'],
 })
 export class CategoriesComponent implements OnInit {
+  @Input() CATEGORY_ITEMS: {
+    color: string;
+    name: string;
+  }[] = [];
   constructor() {}
 
   ngOnInit(): void {}
@@ -13,15 +17,6 @@ export class CategoriesComponent implements OnInit {
   creatingNewCategoryItem = false;
 
   isVisible = true;
-
-  CATEGORY_ITEMS = [
-    { color: 'blue', name: 'Productivity' },
-    { color: 'green', name: 'Health' },
-    { color: 'violet', name: 'Language' },
-    { color: 'yellow', name: 'Music' },
-    { color: 'gray', name: 'Work' },
-    { color: 'lightblue', name: 'Passion' },
-  ];
 
   handleCategoriesVisibility = () => {
     this.isVisible = !this.isVisible;

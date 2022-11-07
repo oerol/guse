@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-activities',
@@ -6,18 +6,31 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./activities.component.scss'],
 })
 export class ActivitiesComponent implements OnInit {
+  @Input() CATEGORY_ITEMS: {
+    color: string;
+    name: string;
+  }[] = [];
+
   constructor() {}
 
   ngOnInit(): void {}
 
+  getColorForActivity = (categoryName: string) => {
+    let category = this.CATEGORY_ITEMS.find((categoryItem) => categoryItem.name === categoryName);
+
+    if (category) {
+      return category.color;
+    }
+    return 'white';
+  };
   creatingNewActivityItem = false;
 
   isVisible = true;
 
   ACTIVITY_ITEMS = [
-    { color: 'red', name: 'Run' },
-    { color: 'red', name: 'Meditate' },
-    { color: 'green', name: 'Think' },
+    { category: 'Health', name: 'Run' },
+    { category: 'Health', name: 'Meditate' },
+    { category: 'Productivity', name: 'Think' },
   ];
 
   handleActivitiesVisibility = () => {
@@ -37,7 +50,7 @@ export class ActivitiesComponent implements OnInit {
     console.log(e);
     let categoryName = (e.target as HTMLInputElement).value;
 
-    let newActivityItem = { color: 'white', name: categoryName };
+    let newActivityItem = { category: 'none', name: categoryName };
     this.ACTIVITY_ITEMS.push(newActivityItem);
 
     this.creatingNewActivityItem = false;
