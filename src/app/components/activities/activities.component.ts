@@ -28,9 +28,21 @@ export class ActivitiesComponent implements OnInit {
   isVisible = true;
 
   ACTIVITY_ITEMS = [
+    { category: 'Read', name: 'Notes' },
+    { category: 'Passion', name: 'Chess' },
     { category: 'Health', name: 'Run' },
+    { category: 'Read', name: 'C&P' },
+    { category: 'Read', name: 'Educated' },
+    { category: 'Music', name: 'Piano' },
+    { category: 'Productivity', name: 'Code' },
+    { category: 'Language', name: 'English' },
+    { category: 'Health', name: 'Gym' },
+    { category: 'Productivity', name: 'Journal' },
+    { category: 'Read', name: 'Pragmatic' },
+    { category: 'Language', name: 'Japanese' },
+    { category: 'Passion', name: 'Morse Code' },
     { category: 'Health', name: 'Meditate' },
-    { category: 'Productivity', name: 'Think' },
+    { category: 'Life', name: 'Work' },
   ];
 
   handleActivitiesVisibility = () => {

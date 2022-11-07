@@ -9,10 +9,11 @@ export class SideMenuComponent implements OnInit {
   CATEGORY_ITEMS = [
     { color: 'blue', name: 'Productivity' },
     { color: 'green', name: 'Health' },
-    { color: 'violet', name: 'Language' },
+    { color: 'crimson', name: 'Language' },
     { color: 'yellow', name: 'Music' },
-    { color: 'gray', name: 'Work' },
+    { color: 'burlywood', name: 'Life' },
     { color: 'lightblue', name: 'Passion' },
+    { color: 'blueviolet', name: 'Read' },
   ];
 
   constructor() {}
