@@ -23,7 +23,7 @@ export class ActivitiesComponent implements OnInit {
   handleActivitiesVisibility = () => {
     this.isVisible = !this.isVisible;
 
-    let arrowElement = document.getElementById('menu-item-arrow') as HTMLElement;
+    let arrowElement = document.getElementById('activities-menu-item-arrow') as HTMLElement;
 
     let rotation = this.isVisible ? 'rotate(0deg)' : 'rotate(90deg)';
     arrowElement.style.transform = rotation;

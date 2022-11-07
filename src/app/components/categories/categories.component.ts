@@ -23,7 +23,7 @@ export class CategoriesComponent implements OnInit {
   handleCategoriesVisibility = () => {
     this.isVisible = !this.isVisible;
 
-    let arrowElement = document.getElementById('menu-item-arrow') as HTMLElement;
+    let arrowElement = document.getElementById('categories-menu-item-arrow') as HTMLElement;
 
     let rotation = this.isVisible ? 'rotate(0deg)' : 'rotate(90deg)';
     arrowElement.style.transform = rotation;

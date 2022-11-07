@@ -3,3 +3,10 @@
   flex-direction: column;
   gap: 20px;
 }
+
+#categories-menu-item-arrow {
+  width: 6px;
+  margin-right: 5px;
+
+  transition: 0.2s ease-out transform;
+}
