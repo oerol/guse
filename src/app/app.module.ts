@@ -6,6 +6,7 @@ import { DayComponent } from './components/day/day.component';
 import { CategoriesComponent } from './components/categories/categories.component';
 import { ActivitiesComponent } from './components/activities/activities.component';
 import { SideMenuComponent } from './components/side-menu/side-menu.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
 
 @NgModule({
   declarations: [
@@ -13,7 +14,8 @@ import { SideMenuComponent } from './components/side-menu/side-menu.component';
     DayComponent,
     CategoriesComponent,
     ActivitiesComponent,
-    SideMenuComponent
+    SideMenuComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule
