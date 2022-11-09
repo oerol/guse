@@ -47,7 +47,9 @@ export class DayComponent implements OnInit {
 
     let boxGroup = this.boxes[boxIndex].group;
     if (boxGroup) {
-      className += ' ' + `group-${boxGroup}`;
+      className += ' ' + `${boxGroup}`;
+    } else {
+      className += ' ' + 'black';
     }
     return className;
   };

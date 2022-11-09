@@ -1,3 +1,5 @@
+@use '../styles/colors';
+
 #side-menu-wrapper {
   display: flex;
   flex-direction: column;
@@ -27,37 +29,6 @@
   width: 15px;
   height: 15px;
   border-radius: 4px;
-}
-
-.red {
-  background-color: red;
-}
-.green {
-  background-color: green;
-}
-.blue {
-  background-color: blue;
-}
-.white {
-  background-color: white;
-}
-.crimson {
-  background-color: crimson;
-}
-.yellow {
-  background-color: yellow;
-}
-.gray {
-  background-color: gray;
-}
-.lightblue {
-  background-color: lightblue;
-}
-.burlywood {
-  background-color: burlywood;
-}
-.blueviolet {
-  background-color: blueviolet;
 }
 
 h4 {

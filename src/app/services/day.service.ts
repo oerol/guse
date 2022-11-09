@@ -57,7 +57,7 @@ export class DayService {
     { title: 'rest', height: 25 },
     { title: 'workout', height: 100, group: 'green' },
     { title: 'rest', height: 50 },
-    { title: 'game', height: 75, group: 'purple' },
+    { title: 'game', height: 75, group: 'blueviolet' },
     { title: 'piano', height: 50, group: 'yellow' },
     { title: 'study', height: 125, group: 'blue' },
     { title: 'rest', height: 25 },
