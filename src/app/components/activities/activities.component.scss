@@ -16,7 +16,9 @@
 
   color: white;
 
-  transition: 0.2s ease-out height, 0.2s ease-out padding;
+  transition: 0.2s ease-out height, 0.2s ease-out padding, 0.2s ease-out width, 0.2s ease-out opacity,
+    0.2s ease-out box-shadow;
+  opacity: 0.5;
 
   cursor: grab;
   user-select: none;

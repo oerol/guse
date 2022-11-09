@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DayService } from 'src/app/services/day.service';
 import { Box } from './box';
 
 @Component({
@@ -9,24 +10,10 @@ import { Box } from './box';
 export class DayComponent implements OnInit {
   mousePosition: string = 'y: ?px';
 
-  boxes: Box[] = [
-    { title: 'meditate', height: 25, group: 'green' },
-    { title: 'read', height: 50, group: 'blue' },
-    { title: 'breakfast', height: 25 },
-    { title: 'work', height: 200, group: 'gray' },
-    { title: 'rest', height: 25 },
-    { title: 'workout', height: 100, group: 'green' },
-    { title: 'rest', height: 50 },
-    { title: 'game', height: 75, group: 'purple' },
-    { title: 'piano', height: 50, group: 'yellow' },
-    { title: 'study', height: 125, group: 'blue' },
-    { title: 'rest', height: 25 },
-    { title: 'read', height: 50, group: 'blue' },
-  ];
+  boxes: Box[] = [];
 
   currentBoxIndex = -1; // click on resize-handle
   contextMenuBoxElementIndex = -1; // hover
-  dragBoxElementIndex = -1; // click on box
 
   MIN_BOX_HEIGHT = 25;
 
@@ -43,9 +30,12 @@ export class DayComponent implements OnInit {
 
   isResizing = false;
 
-  constructor() {
+  constructor(private dayService: DayService) {
     let userDayLength = this.USER_DAY_END - this.USER_DAY_START + 1;
     this.USER_DAY_TICKS = Array.from({ length: userDayLength }, (_, i) => i + this.USER_DAY_START);
+
+    dayService.callService();
+    this.boxes = dayService.boxes;
   }
 
   ngOnInit(): void {
@@ -210,14 +200,12 @@ export class DayComponent implements OnInit {
     ghostBoxElement.style.height = `${this.MIN_BOX_HEIGHT}px`;
   };
 
-  dragBoxElement: Box | undefined;
-
   fadeOutBox = (boxElement: HTMLElement, boxElementIndex: number) => {
     boxElement.style.height = '0px';
     boxElement.style.padding = '0px';
     setTimeout(() => {
       boxElement.style.border = 'none';
-      this.dragBoxElement = this.boxes.splice(boxElementIndex, 1)[0];
+      this.dayService.dragBoxElement = this.boxes.splice(boxElementIndex, 1)[0];
     }, 200 - 50); // 0.2s: transition
   };
 
@@ -226,11 +214,11 @@ export class DayComponent implements OnInit {
 
     if (boxElement.id.includes('box')) {
       let index = boxElement.id.split('-')[1];
-      this.dragBoxElementIndex = parseInt(index) - 1;
+      this.dayService.dragBoxElementIndex = parseInt(index) - 1;
 
       this.setGlobalCursor('grabbing');
 
-      this.fadeOutBox(boxElement, this.dragBoxElementIndex);
+      this.fadeOutBox(boxElement, this.dayService.dragBoxElementIndex);
 
       // Visual feedback
       this.createGhostElement(boxElement);
@@ -270,49 +258,19 @@ export class DayComponent implements OnInit {
   };
 
   ghostDragBox = (e: MouseEvent) => {
-    this.handleGhostElement(e);
-    this.handleInsertionElement(e);
+    let ghostElement = document.getElementById('box-ghost') as HTMLElement;
+
+    this.dayService.handleGhostElement(e, ghostElement);
+    this.dayService.handleInsertionElement(e, ghostElement);
+    /*     this.handleGhostElement(e);
+    this.handleInsertionElement(e); */
   };
 
   endDragBox = (e: MouseEvent) => {
     this.removeGlobalCursor('grabbing');
+    let ghostElement = document.getElementById('box-ghost') as HTMLElement;
 
-    let newBoxPosition = e.clientY;
-
-    let boxElements = Array.from(document.getElementsByClassName('box'));
-    boxElements = boxElements.filter((boxElement) => boxElement.id !== 'box-ghost');
-
-    let currentBoxArrayElementHeight = this.dragBoxElement!.height;
-    this.dragBoxElement!.height = 0;
-
-    let newBoxElementIndex: number = 0;
-    if (this.insertable) {
-      let lastBoxElement = boxElements[boxElements.length - 1];
-      let lastBoxElementBoundingBox = lastBoxElement.getBoundingClientRect();
-
-      if (newBoxPosition >= lastBoxElementBoundingBox.top) {
-        newBoxElementIndex = boxElements.length;
-      }
-      for (let boxElement of boxElements) {
-        let boxElementBoundingBox = boxElement.getBoundingClientRect();
-
-        if (newBoxPosition <= boxElementBoundingBox.bottom - 10) {
-          newBoxElementIndex = parseInt(boxElement.id.split('-')[1]) - 1; // new position
-          break;
-        }
-      }
-    } else {
-      newBoxElementIndex = this.dragBoxElementIndex;
-    }
-
-    this.boxes.splice(newBoxElementIndex, 0, this.dragBoxElement!);
-
-    setTimeout(() => {
-      this.boxes[newBoxElementIndex].height = currentBoxArrayElementHeight;
-    }, 1);
-
-    let ghostBoxElement = document.getElementById('box-ghost') as HTMLElement;
-    ghostBoxElement.remove();
+    this.dayService.applyDrag(e, ghostElement);
 
     document.removeEventListener('mousemove', this.ghostDragBox);
     document.removeEventListener('mouseup', this.endDragBox);

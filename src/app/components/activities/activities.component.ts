@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { DayService } from 'src/app/services/day.service';
 
 @Component({
   selector: 'app-activities',
@@ -11,7 +12,9 @@ export class ActivitiesComponent implements OnInit {
     name: string;
   }[] = [];
 
-  constructor() {}
+  constructor(private dayService: DayService) {
+    dayService.callService();
+  }
 
   ngOnInit(): void {}
 
@@ -97,6 +100,9 @@ export class ActivitiesComponent implements OnInit {
     let height = 25;
     dragBoxElement.style.top = `${e.clientY - height / 2}px`;
     dragBoxElement.style.left = `${e.clientX + 5}px`;
+
+    this.dayService.handleGhostElement(e, dragBoxElement);
+    this.dayService.handleInsertionElement(e, dragBoxElement);
   };
 
   handleMouseUp = (e: MouseEvent) => {
@@ -108,6 +114,9 @@ export class ActivitiesComponent implements OnInit {
     let color = this.getColorForActivity(activityObject.category);
 
     dragBoxElement.classList.remove(color);
+
+    this.dayService.dragBoxElement = { height: 15, title: activityObject.name, group: color };
+    this.dayService.applyDrag(e, dragBoxElement);
 
     document.removeEventListener('mousemove', this.handleMouseMove);
     document.removeEventListener('mouseup', this.handleMouseUp);
