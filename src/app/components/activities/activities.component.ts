@@ -115,7 +115,9 @@ export class ActivitiesComponent implements OnInit {
 
     dragBoxElement.classList.remove(color);
 
-    this.dayService.dragBoxElement = { height: 15, title: activityObject.name, group: color };
+    let height = this.dayService.MIN_BOX_HEIGHT;
+
+    this.dayService.dragBoxElement = { height: height, title: activityObject.name, group: color };
     this.dayService.applyDrag(e, dragBoxElement);
 
     document.removeEventListener('mousemove', this.handleMouseMove);
