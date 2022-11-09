@@ -101,6 +101,6 @@ export class DayService {
       this.boxes[newBoxElementIndex].height = currentBoxArrayElementHeight;
     }, 1);
 
-    dragBoxElement.remove();
+    if (dragBoxElement.id !== 'activity-box-ghost') dragBoxElement.remove();
   };
 }
