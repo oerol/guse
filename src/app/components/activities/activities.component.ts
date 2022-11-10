@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { ActivityService } from 'src/app/services/activity.service';
 import { DayService } from 'src/app/services/day.service';
 
 @Component({
@@ -11,12 +12,21 @@ export class ActivitiesComponent implements OnInit {
     color: string;
     name: string;
   }[] = [];
-
-  constructor(private dayService: DayService) {
+  _subscription: any;
+  constructor(private dayService: DayService, private activityService: ActivityService) {
     dayService.callService();
+    this.ACTIVITY_ITEMS = activityService.ACTIVITY_ITEMS;
+    this._subscription = activityService.activitesChange.subscribe((value) => {
+      this.ACTIVITY_ITEMS = value;
+    });
   }
 
   ngOnInit(): void {}
+
+  ngOnDestroy() {
+    //prevent memory leak when component destroyed
+    this._subscription.unsubscribe();
+  }
 
   getColorForActivity = (categoryName: string) => {
     let category = this.CATEGORY_ITEMS.find((categoryItem) => categoryItem.name === categoryName);
@@ -30,23 +40,7 @@ export class ActivitiesComponent implements OnInit {
 
   isVisible = true;
 
-  ACTIVITY_ITEMS = [
-    { category: 'Read', name: 'Notes' },
-    { category: 'Passion', name: 'Chess' },
-    { category: 'Health', name: 'Run' },
-    { category: 'Read', name: 'C&P' },
-    { category: 'Read', name: 'Educated' },
-    { category: 'Music', name: 'Piano' },
-    { category: 'Productivity', name: 'Code' },
-    { category: 'Language', name: 'English' },
-    { category: 'Health', name: 'Gym' },
-    { category: 'Productivity', name: 'Journal' },
-    { category: 'Read', name: 'Pragmatic' },
-    { category: 'Language', name: 'Japanese' },
-    { category: 'Passion', name: 'Morse Code' },
-    { category: 'Health', name: 'Meditate' },
-    { category: 'Life', name: 'Work' },
-  ];
+  ACTIVITY_ITEMS: { category: string; name: string }[] = [];
 
   handleActivitiesVisibility = () => {
     this.isVisible = !this.isVisible;

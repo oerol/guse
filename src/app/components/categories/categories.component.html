@@ -3,9 +3,13 @@
     <img id="categories-menu-item-arrow" src="/assets/menu-item-arrow.svg" alt="" />CATEGORIES
   </h4>
   <div *ngIf="isVisible" class="categories-content">
-    <div *ngFor="let categoryItem of CATEGORY_ITEMS" class="category-item">
+    <div
+      *ngFor="let categoryItem of CATEGORY_ITEMS"
+      class="category-item"
+      (click)="filterActivities($event, categoryItem)"
+    >
       <div [class]="'category-item-color' + ' ' + categoryItem.color"></div>
-      <div class="category-item-name" contenteditable="true">{{ categoryItem.name }}</div>
+      <div class="category-item-name">{{ categoryItem.name }}</div>
     </div>
     <div *ngIf="creatingNewCategoryItem" class="new-category-item">
       <div class="category-item-color white"></div>

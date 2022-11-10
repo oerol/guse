@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { ActivityService } from 'src/app/services/activity.service';
 
 @Component({
   selector: 'app-categories',
@@ -10,7 +11,7 @@ export class CategoriesComponent implements OnInit {
     color: string;
     name: string;
   }[] = [];
-  constructor() {}
+  constructor(private activityService: ActivityService) {}
 
   ngOnInit(): void {}
 
@@ -39,5 +40,17 @@ export class CategoriesComponent implements OnInit {
     this.CATEGORY_ITEMS.push(newCategoryItem);
 
     this.creatingNewCategoryItem = false;
+  };
+
+  filterIsActive = false;
+
+  filterActivities = (e: MouseEvent, categoryItem: { color: string; name: string }) => {
+    this.filterIsActive = !this.filterIsActive;
+
+    if (this.filterIsActive) {
+      this.activityService.filterActivites(categoryItem.name);
+    } else {
+      this.activityService.resetFilter();
+    }
   };
 }
