@@ -32,22 +32,33 @@ export class DayService {
 
   handleInsertionElement = (e: MouseEvent, ghostElement: HTMLElement) => {
     let clientY = e.clientY;
-    let boxElements = Array.from(document.getElementsByClassName('box'));
-    boxElements = boxElements.filter((boxElement) => boxElement.id !== 'box-ghost');
+    let clientX = e.clientX;
 
-    for (let boxElement of boxElements) {
-      let boxElementBoundingBox = boxElement.getBoundingClientRect();
-      let insertableAbove = clientY >= boxElementBoundingBox.top && clientY <= boxElementBoundingBox.top + 10;
-      let insertableBelow = clientY >= boxElementBoundingBox.bottom - 10 && clientY <= boxElementBoundingBox.bottom;
+    let dayElement = document.getElementsByClassName('day')[0];
+    let dayElementPosition = dayElement.getBoundingClientRect();
 
-      if (insertableAbove || insertableBelow) {
-        ghostElement.style.opacity = '0.95';
-        ghostElement.style.boxShadow = `0px 0px 10px 5px rgba(0,0,0,0.4)`;
+    let insertableLeft = clientX > dayElementPosition.left - 10;
+    let insertableRight = clientX < dayElementPosition.right + 10;
 
-        this.insertable = true;
-        return;
+    if (insertableLeft && insertableRight) {
+      let boxElements = Array.from(document.getElementsByClassName('box'));
+      boxElements = boxElements.filter((boxElement) => boxElement.id !== 'box-ghost');
+
+      for (let boxElement of boxElements) {
+        let boxElementBoundingBox = boxElement.getBoundingClientRect();
+        let insertableAbove = clientY >= boxElementBoundingBox.top && clientY <= boxElementBoundingBox.top + 10;
+        let insertableBelow = clientY >= boxElementBoundingBox.bottom - 10 && clientY <= boxElementBoundingBox.bottom;
+
+        if (insertableAbove || insertableBelow) {
+          ghostElement.style.opacity = '0.95';
+          ghostElement.style.boxShadow = `0px 0px 10px 5px rgba(0,0,0,0.4)`;
+
+          this.insertable = true;
+          return;
+        }
       }
     }
+
     ghostElement.style.boxShadow = `none`;
     ghostElement.style.opacity = '0.5';
 
