@@ -1,6 +1,7 @@
 @use '../side-menu/side-menu.component';
 
 #activity-box-ghost {
+  display: none;
   z-index: 1;
   width: 200px;
   height: 25px;
