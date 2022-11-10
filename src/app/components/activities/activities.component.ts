@@ -85,24 +85,23 @@ export class ActivitiesComponent implements OnInit {
     let activityObject = this.ACTIVITY_ITEMS[this.activityIndex];
     let color = this.getColorForActivity(activityObject.category);
 
-    let dragBoxElement = document.getElementById('activity-box-ghost') as HTMLElement;
+    let ghostElement = document.getElementById('activity-box-ghost') as HTMLElement;
 
-    dragBoxElement.innerText = activityObject.name;
-    dragBoxElement.style.display = 'block';
-    dragBoxElement.classList.add(color);
+    ghostElement.innerText = activityObject.name;
+    ghostElement.style.display = 'block';
+    ghostElement.classList.add(color);
+
+    this.dayService.handleActivityGhostElement(e, ghostElement);
 
     document.addEventListener('mousemove', this.handleMouseMove);
     document.addEventListener('mouseup', this.handleMouseUp);
   };
 
   handleMouseMove = (e: MouseEvent) => {
-    let dragBoxElement = document.getElementById('activity-box-ghost') as HTMLElement;
-    let height = 25;
-    dragBoxElement.style.top = `${e.clientY - height / 2}px`;
-    dragBoxElement.style.left = `${e.clientX + 5}px`;
+    let ghostElement = document.getElementById('activity-box-ghost') as HTMLElement;
 
-    this.dayService.handleGhostElement(e, dragBoxElement);
-    this.dayService.handleInsertionElement(e, dragBoxElement);
+    this.dayService.handleActivityGhostElement(e, ghostElement);
+    this.dayService.handleInsertionElement(e, ghostElement);
   };
 
   handleMouseUp = (e: MouseEvent) => {

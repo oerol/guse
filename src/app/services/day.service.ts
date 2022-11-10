@@ -15,6 +15,11 @@ export class DayService {
     console.log(this.count);
   }
 
+  handleActivityGhostElement = (e: MouseEvent, ghostElement: HTMLElement) => {
+    ghostElement.style.top = `${e.clientY - this.MIN_BOX_HEIGHT / 2}px`;
+    ghostElement.style.left = `${e.clientX + 5}px`;
+  };
+
   handleGhostElement = (e: MouseEvent, ghostElement: HTMLElement) => {
     let boxWidth = 200; // Todo
 
@@ -92,7 +97,11 @@ export class DayService {
         }
       }
     } else {
-      newBoxElementIndex = this.dragBoxElementIndex;
+      if (dragBoxElement.id == 'box-ghost') {
+        newBoxElementIndex = this.dragBoxElementIndex;
+      } else if (dragBoxElement.id == 'activity-box-ghost') {
+        return;
+      }
     }
 
     this.boxes.splice(newBoxElementIndex, 0, this.dragBoxElement!);
@@ -101,6 +110,6 @@ export class DayService {
       this.boxes[newBoxElementIndex].height = currentBoxArrayElementHeight;
     }, 1);
 
-    if (dragBoxElement.id !== 'activity-box-ghost') dragBoxElement.remove();
+    if (dragBoxElement.id === 'box-ghost') dragBoxElement.remove();
   };
 }
