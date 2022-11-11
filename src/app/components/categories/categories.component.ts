@@ -44,13 +44,28 @@ export class CategoriesComponent implements OnInit {
 
   filterIsActive = false;
 
+  handleFilterIndicator = (categoryIndex: number, show: boolean) => {
+    let categoryElement = document.getElementsByClassName('category-item-name')[categoryIndex];
+    let indicator = '→ ';
+    if (show) {
+      categoryElement.textContent = indicator + categoryElement.textContent;
+    } else {
+      console.log(categoryElement.textContent);
+      console.log(categoryElement.textContent!.replace(indicator, ''));
+      categoryElement.textContent = categoryElement.textContent!.replace(indicator, '');
+    }
+  };
+
   filterActivities = (e: MouseEvent, categoryItem: { color: string; name: string }) => {
+    let categoryIndex = this.CATEGORY_ITEMS.indexOf(categoryItem);
     this.filterIsActive = !this.filterIsActive;
 
     if (this.filterIsActive) {
       this.activityService.filterActivites(categoryItem.name);
+      this.handleFilterIndicator(categoryIndex, true);
     } else {
       this.activityService.resetFilter();
+      this.handleFilterIndicator(categoryIndex, false);
     }
   };
 }
