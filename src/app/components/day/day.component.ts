@@ -15,14 +15,14 @@ export class DayComponent implements OnInit {
   currentBoxIndex = -1; // click on resize-handle
   contextMenuBoxElementIndex = -1; // hover
 
-  MIN_BOX_HEIGHT = 25;
+  MIN_BOX_HEIGHT: number;
 
-  HEIGHT_INCREMENT = 25;
+  HEIGHT_INCREMENT: number;
+  DAY_LENGTH: number;
+
   HEIGHT_IN_HOURS = 0.5;
 
   TIME_SPENT_AWAKE = 16;
-
-  DAY_LENGTH = this.TIME_SPENT_AWAKE * 2 * this.HEIGHT_INCREMENT;
 
   USER_DAY_START = 7;
   USER_DAY_END = 23;
@@ -36,6 +36,9 @@ export class DayComponent implements OnInit {
 
     dayService.callService();
     this.boxes = dayService.boxes;
+    this.HEIGHT_INCREMENT = dayService.HEIGHT_INCREMENT;
+    this.DAY_LENGTH = this.TIME_SPENT_AWAKE * 2;
+    this.MIN_BOX_HEIGHT = 1 * dayService.HEIGHT_INCREMENT;
   }
 
   ngOnInit(): void {
@@ -74,18 +77,19 @@ export class DayComponent implements OnInit {
     let boxSize = currentBox.getBoundingClientRect();
 
     let intendedBoxHeight = e.clientY - boxSize.top;
-    let incrementedBoxHeight = Math.floor(intendedBoxHeight / this.HEIGHT_INCREMENT) * this.HEIGHT_INCREMENT;
+    let incrementedBoxHeight = Math.floor(intendedBoxHeight / this.HEIGHT_INCREMENT);
 
     let heightsOfOtherBoxes = this.getHeightOfOtherBoxes();
 
     let newBoxHeight;
-    if (incrementedBoxHeight < this.MIN_BOX_HEIGHT) {
-      newBoxHeight = this.MIN_BOX_HEIGHT;
+    if (incrementedBoxHeight < 1) {
+      newBoxHeight = 1;
     } else if (incrementedBoxHeight + heightsOfOtherBoxes > this.DAY_LENGTH) {
       newBoxHeight = this.DAY_LENGTH - heightsOfOtherBoxes;
     } else {
       newBoxHeight = incrementedBoxHeight;
     }
+    console.log(newBoxHeight);
     this.boxes[this.currentBoxIndex].height = newBoxHeight;
   };
 

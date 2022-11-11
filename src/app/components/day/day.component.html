@@ -6,7 +6,7 @@
   <div class="day">
     <div
       *ngFor="let box of boxes; index as index"
-      [ngStyle]="{ height: box.height + 'px' }"
+      [ngStyle]="{ height: box.height * HEIGHT_INCREMENT + 'px' }"
       [class]="getBoxClassName(index)"
       [id]="'box-' + (index + 1)"
       (mousemove)="handleMouseMove($event)"

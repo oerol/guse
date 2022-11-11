@@ -17,7 +17,7 @@ export class DayService {
   }
 
   convertBoxHeightToHours = (boxHeight: number) => {
-    let duration = boxHeight / this.HEIGHT_INCREMENT / 2;
+    let duration = boxHeight / 2;
     let durationInHours = Math.floor(duration);
 
     if (duration % 1 === 0) {
@@ -78,17 +78,17 @@ export class DayService {
   };
 
   boxes: Box[] = [
-    { title: 'meditate', height: 25, group: 'green' },
-    { title: 'read', height: 50, group: 'blue' },
-    { title: 'breakfast', height: 25 },
-    { title: 'work', height: 200, group: 'gray' },
-    { title: 'rest', height: 25 },
-    { title: 'workout', height: 100, group: 'green' },
-    { title: 'rest', height: 50 },
-    { title: 'game', height: 75, group: 'blueviolet' },
-    { title: 'piano', height: 50, group: 'yellow' },
-    { title: 'study', height: 125, group: 'blue' },
-    { title: 'rest', height: 25 },
+    { title: 'meditate', height: 1, group: 'green' },
+    { title: 'read', height: 2, group: 'blue' },
+    { title: 'breakfast', height: 1 },
+    { title: 'work', height: 4, group: 'gray' },
+    { title: 'rest', height: 1 },
+    { title: 'workout', height: 2, group: 'green' },
+    { title: 'rest', height: 2 },
+    { title: 'game', height: 3, group: 'blueviolet' },
+    { title: 'piano', height: 2, group: 'yellow' },
+    { title: 'study', height: 5, group: 'blue' },
+    { title: 'rest', height: 1 },
   ];
 
   dragBoxElement: Box | undefined;

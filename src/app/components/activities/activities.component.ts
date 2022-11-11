@@ -108,7 +108,7 @@ export class ActivitiesComponent implements OnInit {
 
     dragBoxElement.classList.remove(color);
 
-    let height = this.dayService.MIN_BOX_HEIGHT;
+    let height = 1;
 
     this.dayService.dragBoxElement = { height: height, title: activityObject.name, group: color };
     this.dayService.applyDrag(e, dragBoxElement);
