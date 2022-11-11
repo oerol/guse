@@ -26,7 +26,9 @@ export class ActivityService {
   ];
 
   activitesChange: Subject<any> = new Subject<any>();
-  constructor() {}
+  constructor() {
+    this.ACTIVITY_ITEMS.sort((a, b) => a.name.localeCompare(b.name));
+  }
 
   filterActivites = (category: string) => {
     let filteredActivities = this.ACTIVITY_ITEMS.filter((activity) => activity.category === category);

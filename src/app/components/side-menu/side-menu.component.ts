@@ -19,7 +19,9 @@ export class SideMenuComponent implements OnInit {
     { color: 'darkseagreen', name: 'Self-Development' },
   ];
 
-  constructor() {}
+  constructor() {
+    this.CATEGORY_ITEMS.sort((a, b) => a.name.localeCompare(b.name));
+  }
 
   ngOnInit(): void {}
 }
