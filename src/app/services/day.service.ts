@@ -134,5 +134,10 @@ export class DayService {
     }, 1);
 
     if (dragBoxElement.id === 'box-ghost') dragBoxElement.remove();
+
+    if (dragBoxElement.id === 'activity-box-ghost') {
+      dragBoxElement.style.boxShadow = `none`;
+      dragBoxElement.style.opacity = '0.5';
+    }
   };
 }
