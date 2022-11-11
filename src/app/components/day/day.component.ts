@@ -126,14 +126,7 @@ export class DayComponent implements OnInit {
   }
 
   getBoxDuration(boxHeight: number) {
-    let duration = boxHeight / this.HEIGHT_INCREMENT / 2;
-    let durationInHours = Math.floor(duration);
-
-    if (duration % 1 === 0) {
-      return `${durationInHours}:00`;
-    } else {
-      return `${durationInHours}:30`;
-    }
+    return this.dayService.convertBoxHeightToHours(boxHeight);
   }
 
   showContextMenu(targetElement: HTMLElement) {

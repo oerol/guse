@@ -7,6 +7,7 @@ import { Box } from '../components/day/box';
 export class DayService {
   count = 0;
   MIN_BOX_HEIGHT = 25;
+  HEIGHT_INCREMENT = 25;
 
   constructor() {}
 
@@ -14,6 +15,17 @@ export class DayService {
     this.count++;
     console.log(this.count);
   }
+
+  convertBoxHeightToHours = (boxHeight: number) => {
+    let duration = boxHeight / this.HEIGHT_INCREMENT / 2;
+    let durationInHours = Math.floor(duration);
+
+    if (duration % 1 === 0) {
+      return `${durationInHours}:00`;
+    } else {
+      return `${durationInHours}:30`;
+    }
+  };
 
   handleActivityGhostElement = (e: MouseEvent, ghostElement: HTMLElement) => {
     ghostElement.style.top = `${e.clientY - this.MIN_BOX_HEIGHT / 2}px`;
