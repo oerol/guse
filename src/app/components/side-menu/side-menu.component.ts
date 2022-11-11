@@ -7,13 +7,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SideMenuComponent implements OnInit {
   CATEGORY_ITEMS = [
-    { color: 'blue', name: 'Productivity' },
+    { color: 'blue', name: 'Learning' },
+    { color: 'plum', name: 'Skills' },
     { color: 'green', name: 'Health' },
     { color: 'crimson', name: 'Language' },
     { color: 'yellow', name: 'Music' },
     { color: 'burlywood', name: 'Life' },
     { color: 'lightblue', name: 'Passion' },
-    { color: 'blueviolet', name: 'Read' },
+    { color: 'blueviolet', name: 'Books' },
+    { color: 'brown', name: 'Entertainment' },
+    { color: 'darkseagreen', name: 'Self-Development' },
   ];
 
   constructor() {}

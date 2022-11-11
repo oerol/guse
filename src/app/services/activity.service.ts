@@ -5,21 +5,24 @@ import { Subject } from 'rxjs';
 })
 export class ActivityService {
   ACTIVITY_ITEMS = [
-    { category: 'Read', name: 'Notes' },
+    { category: 'Skills', name: '3D Modelling' },
     { category: 'Passion', name: 'Chess' },
     { category: 'Health', name: 'Run' },
-    { category: 'Read', name: 'C&P' },
-    { category: 'Read', name: 'Educated' },
+    { category: 'Books', name: 'Educated' },
+    { category: 'Skills', name: 'Photoshop' },
     { category: 'Music', name: 'Piano' },
-    { category: 'Productivity', name: 'Code' },
+    { category: 'Books', name: 'Notes' },
+    { category: 'Skills', name: 'Code' },
     { category: 'Language', name: 'English' },
     { category: 'Health', name: 'Gym' },
-    { category: 'Productivity', name: 'Journal' },
-    { category: 'Read', name: 'Pragmatic' },
+    { category: 'Self-Development', name: 'Journal' },
+    { category: 'Books', name: 'Pragmatic' },
     { category: 'Language', name: 'Japanese' },
     { category: 'Passion', name: 'Morse Code' },
     { category: 'Health', name: 'Meditate' },
-    { category: 'Life', name: 'Work' },
+    { category: 'Skills', name: 'Video Editing' },
+    { category: 'Books', name: 'C&P' },
+    { category: 'Learning', name: 'Linux' },
   ];
 
   activitesChange: Subject<any> = new Subject<any>();
