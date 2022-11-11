@@ -42,7 +42,7 @@ export class CategoriesComponent implements OnInit {
     this.creatingNewCategoryItem = false;
   };
 
-  filterIsActive = false;
+  filteredCategoryIndex = -1;
 
   handleFilterIndicator = (categoryIndex: number, show: boolean) => {
     let categoryElement = document.getElementsByClassName('category-item-name')[categoryIndex];
@@ -58,14 +58,19 @@ export class CategoriesComponent implements OnInit {
 
   filterActivities = (e: MouseEvent, categoryItem: { color: string; name: string }) => {
     let categoryIndex = this.CATEGORY_ITEMS.indexOf(categoryItem);
-    this.filterIsActive = !this.filterIsActive;
 
-    if (this.filterIsActive) {
+    if (this.filteredCategoryIndex !== categoryIndex) {
+      if (this.filteredCategoryIndex !== -1) {
+        this.handleFilterIndicator(this.filteredCategoryIndex, false);
+      }
+      this.activityService.resetFilter();
+
       this.activityService.filterActivites(categoryItem.name);
       this.handleFilterIndicator(categoryIndex, true);
     } else {
       this.activityService.resetFilter();
       this.handleFilterIndicator(categoryIndex, false);
     }
+    this.filteredCategoryIndex = categoryIndex;
   };
 }
