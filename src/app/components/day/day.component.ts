@@ -37,7 +37,7 @@ export class DayComponent implements OnInit {
     dayService.callService();
     this.boxes = dayService.boxes;
     this.HEIGHT_INCREMENT = dayService.HEIGHT_INCREMENT;
-    this.DAY_LENGTH = this.TIME_SPENT_AWAKE * 2;
+    this.DAY_LENGTH = this.TIME_SPENT_AWAKE * 4;
     this.MIN_BOX_HEIGHT = 1 * dayService.HEIGHT_INCREMENT;
   }
 

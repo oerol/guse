@@ -6,8 +6,8 @@ import { Box } from '../components/day/box';
 })
 export class DayService {
   count = 0;
-  MIN_BOX_HEIGHT = 25;
-  HEIGHT_INCREMENT = 25;
+  MIN_BOX_HEIGHT = 20;
+  HEIGHT_INCREMENT = 20;
 
   constructor() {}
 
@@ -17,13 +17,20 @@ export class DayService {
   }
 
   convertBoxHeightToHours = (boxHeight: number) => {
-    let duration = boxHeight / 2;
+    console.log(boxHeight);
+    let duration = boxHeight / 4;
     let durationInHours = Math.floor(duration);
 
     if (duration % 1 === 0) {
       return `${durationInHours}:00`;
-    } else {
+    } else if (duration % 1 === 0.25) {
+      return `${durationInHours}:15`;
+    } else if (duration % 1 === 0.5) {
       return `${durationInHours}:30`;
+    } else if (duration % 1 === 0.75) {
+      return `${durationInHours}:45`;
+    } else {
+      return 'ERROR';
     }
   };
 

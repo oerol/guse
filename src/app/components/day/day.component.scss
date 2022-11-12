@@ -2,7 +2,17 @@
 
 .day-wrapper {
   display: flex;
-  margin-top: 10px;
+
+  overflow-y: scroll;
+  height: 900px;
+
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  padding: 10px 0px;
 }
 
 .day-duration {
@@ -14,7 +24,7 @@
   top: -7px;
   margin-right: 50px;
 
-  height: 814px;
+  height: 1293px;
   font-size: 10px;
 
   color: #8f8f8f;
@@ -50,7 +60,7 @@
 
 .box-text {
   position: absolute;
-  top: 3px;
+  top: 1px;
 }
 
 #box-ghost {
@@ -75,7 +85,6 @@
 
 .box-duration {
   right: 4px;
-  bottom: 2px;
 }
 
 .group-a {
