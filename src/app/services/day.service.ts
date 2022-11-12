@@ -94,6 +94,16 @@ export class DayService {
   dragBoxElement: Box | undefined;
   dragBoxElementIndex = -1; // click on box
 
+  getHeightOfAllBoxes = () => {
+    let totalHeight = 0;
+
+    this.boxes.forEach((box) => {
+      totalHeight += box.height;
+    });
+
+    return totalHeight;
+  };
+
   applyDrag = (e: MouseEvent, dragBoxElement: HTMLElement) => {
     let newBoxPosition = e.clientY;
 
@@ -105,19 +115,23 @@ export class DayService {
 
     let newBoxElementIndex: number = 0;
     if (this.insertable) {
-      let lastBoxElement = boxElements[boxElements.length - 1];
-      let lastBoxElementBoundingBox = lastBoxElement.getBoundingClientRect();
+      if (this.getHeightOfAllBoxes() < 16 * 2) {
+        let lastBoxElement = boxElements[boxElements.length - 1];
+        let lastBoxElementBoundingBox = lastBoxElement.getBoundingClientRect();
 
-      if (newBoxPosition >= lastBoxElementBoundingBox.top) {
-        newBoxElementIndex = boxElements.length;
-      }
-      for (let boxElement of boxElements) {
-        let boxElementBoundingBox = boxElement.getBoundingClientRect();
-
-        if (newBoxPosition <= boxElementBoundingBox.bottom - 10) {
-          newBoxElementIndex = parseInt(boxElement.id.split('-')[1]) - 1; // new position
-          break;
+        if (newBoxPosition >= lastBoxElementBoundingBox.top) {
+          newBoxElementIndex = boxElements.length;
         }
+        for (let boxElement of boxElements) {
+          let boxElementBoundingBox = boxElement.getBoundingClientRect();
+
+          if (newBoxPosition <= boxElementBoundingBox.bottom - 10) {
+            newBoxElementIndex = parseInt(boxElement.id.split('-')[1]) - 1; // new position
+            break;
+          }
+        }
+      } else {
+        return;
       }
     } else {
       if (dragBoxElement.id == 'box-ghost') {
