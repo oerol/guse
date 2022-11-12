@@ -133,6 +133,7 @@ export class DayService {
       } else {
         return;
       }
+      this.insertable = false;
     } else {
       if (dragBoxElement.id == 'box-ghost') {
         newBoxElementIndex = this.dragBoxElementIndex;
