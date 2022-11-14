@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DayService } from 'src/app/services/day.service';
+import { MouseService } from 'src/app/services/mouse.service';
 import { Box } from './box';
 
 @Component({
@@ -28,7 +29,7 @@ export class DayComponent implements OnInit {
 
   isResizing = false;
 
-  constructor(private dayService: DayService) {
+  constructor(private dayService: DayService, private mouseService: MouseService) {
     let userDayLength = this.USER_DAY_END - this.USER_DAY_START + 1;
     this.USER_DAY_TICKS = Array.from({ length: userDayLength }, (_, i) => i + this.USER_DAY_START);
 
@@ -201,16 +202,20 @@ export class DayComponent implements OnInit {
       let index = boxElement.id.split('-')[1];
       this.dayService.dragBoxElementIndex = parseInt(index) - 1;
 
-      this.dayService.setGlobalCursor('grabbing');
+      this.mouseService.userIntendsToDrag().then((intendsToDrag) => {
+        if (intendsToDrag) {
+          this.dayService.setGlobalCursor('grabbing');
 
-      this.fadeOutBox(boxElement, this.dayService.dragBoxElementIndex);
+          this.fadeOutBox(boxElement, this.dayService.dragBoxElementIndex);
 
-      // Visual feedback
-      this.createGhostElement(boxElement);
-      this.handleGhostElement(e);
+          // Visual feedback
+          this.createGhostElement(boxElement);
+          this.handleGhostElement(e);
 
-      document.addEventListener('mousemove', this.ghostDragBox);
-      document.addEventListener('mouseup', this.endDragBox);
+          document.addEventListener('mousemove', this.ghostDragBox);
+          document.addEventListener('mouseup', this.endDragBox);
+        }
+      });
     }
   };
 
