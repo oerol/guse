@@ -19,12 +19,9 @@
   margin-bottom: 5px;
 }
 
-.category-item {
-  cursor: pointer;
-  user-select: none;
-}
+.category-item,
 .activity-item {
-  cursor: grab;
+  cursor: pointer;
   user-select: none;
 }
 

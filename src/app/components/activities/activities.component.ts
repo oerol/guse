@@ -21,7 +21,13 @@ export class ActivitiesComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {}
+  setMouseIsHeldDown = () => {
+    this.mouseIsHeldDown = false;
+  };
+
+  ngOnInit(): void {
+    document.addEventListener('mouseup', this.setMouseIsHeldDown);
+  }
 
   ngOnDestroy() {
     //prevent memory leak when component destroyed
@@ -67,6 +73,9 @@ export class ActivitiesComponent implements OnInit {
 
   activityIndex = 0;
 
+  mouseDownInterval: NodeJS.Timeout | undefined;
+  mouseIsHeldDown = false;
+
   handleMouseDown = (e: MouseEvent) => {
     let activityElement = e.target as HTMLElement;
 
@@ -75,20 +84,31 @@ export class ActivitiesComponent implements OnInit {
       activityElement = activityElement.parentElement as HTMLElement;
     }
 
-    this.activityIndex = parseInt(activityElement.id.split('-')[1]) - 1;
-    let activityObject = this.ACTIVITY_ITEMS[this.activityIndex];
-    let color = this.getColorForActivity(activityObject.category);
+    this.mouseIsHeldDown = true;
+    this.mouseDownInterval = setTimeout(() => {
+      this.activityIndex = parseInt(activityElement.id.split('-')[1]) - 1;
+      let activityObject = this.ACTIVITY_ITEMS[this.activityIndex];
+      let color = this.getColorForActivity(activityObject.category);
 
-    let ghostElement = document.getElementById('activity-box-ghost') as HTMLElement;
+      if (this.mouseIsHeldDown) {
+        // user intends to drag the activity
+        let ghostElement = document.getElementById('activity-box-ghost') as HTMLElement;
 
-    ghostElement.innerText = activityObject.name;
-    ghostElement.style.display = 'block';
-    ghostElement.classList.add(color);
+        ghostElement.innerText = activityObject.name;
+        ghostElement.style.display = 'block';
+        ghostElement.classList.add(color);
 
-    this.dayService.handleActivityGhostElement(e, ghostElement);
+        this.dayService.handleActivityGhostElement(e, ghostElement);
 
-    document.addEventListener('mousemove', this.handleMouseMove);
-    document.addEventListener('mouseup', this.handleMouseUp);
+        document.addEventListener('mousemove', this.handleMouseMove);
+        document.addEventListener('mouseup', this.handleMouseUp);
+      } else {
+        // user intends to quickly add the activity to the day
+        let boxElement = { height: 1, title: activityObject.name, group: color };
+        this.dayService.addToBoxes(boxElement);
+        console.log('whopty');
+      }
+    }, 100); // drag the activity if the mouse is still being pressed down after this interval
   };
 
   handleMouseMove = (e: MouseEvent) => {

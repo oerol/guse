@@ -19,7 +19,6 @@ export class DayService {
   }
 
   convertBoxHeightToHours = (boxHeight: number) => {
-    console.log(boxHeight);
     let duration = boxHeight * this.HEIGHT_IN_HOURS;
     let durationInHours = Math.floor(duration);
 
@@ -163,5 +162,9 @@ export class DayService {
       dragBoxElement.style.boxShadow = `none`;
       dragBoxElement.style.opacity = '0.5';
     }
+  };
+
+  addToBoxes = (box: Box) => {
+    this.boxes.push(box);
   };
 }
