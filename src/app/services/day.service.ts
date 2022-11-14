@@ -167,4 +167,16 @@ export class DayService {
   addToBoxes = (box: Box) => {
     this.boxes.push(box);
   };
+
+  // https://stackoverflow.com/questions/10750582/global-override-of-mouse-cursor-with-javascript
+  setGlobalCursor = (cursor: string) => {
+    const cursorStyle = document.createElement('style');
+    cursorStyle.innerHTML = `*{cursor: ${cursor}!important;}`;
+    cursorStyle.id = `global-cursor-style-${cursor}`;
+    document.head.appendChild(cursorStyle);
+  };
+
+  removeGlobalCursor = (cursor: string) => {
+    document.getElementById(`global-cursor-style-${cursor}`)!.remove();
+  };
 }

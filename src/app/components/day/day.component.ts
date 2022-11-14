@@ -93,7 +93,7 @@ export class DayComponent implements OnInit {
 
   onMouseUp = (e: MouseEvent) => {
     this.isResizing = false;
-    this.removeGlobalCursor('ns-resize');
+    this.dayService.removeGlobalCursor('ns-resize');
 
     document.removeEventListener('mousemove', this.onMouseMove);
     document.removeEventListener('mouseup', this.onMouseUp);
@@ -112,7 +112,7 @@ export class DayComponent implements OnInit {
 
     this.isResizing = true;
 
-    this.setGlobalCursor('ns-resize');
+    this.dayService.setGlobalCursor('ns-resize');
 
     document.addEventListener('mousemove', this.onMouseMove);
     document.addEventListener('mouseup', this.onMouseUp);
@@ -168,18 +168,6 @@ export class DayComponent implements OnInit {
     this.boxes[this.contextMenuBoxElementIndex].group = color;
   };
 
-  // https://stackoverflow.com/questions/10750582/global-override-of-mouse-cursor-with-javascript
-  setGlobalCursor = (cursor: string) => {
-    const cursorStyle = document.createElement('style');
-    cursorStyle.innerHTML = `*{cursor: ${cursor}!important;}`;
-    cursorStyle.id = `global-cursor-style-${cursor}`;
-    document.head.appendChild(cursorStyle);
-  };
-
-  removeGlobalCursor = (cursor: string) => {
-    document.getElementById(`global-cursor-style-${cursor}`)!.remove();
-  };
-
   createGhostElement = (originalElement: HTMLElement) => {
     let ghostBoxElement = originalElement.cloneNode(true) as HTMLElement;
     ghostBoxElement.id = 'box-ghost';
@@ -213,7 +201,7 @@ export class DayComponent implements OnInit {
       let index = boxElement.id.split('-')[1];
       this.dayService.dragBoxElementIndex = parseInt(index) - 1;
 
-      this.setGlobalCursor('grabbing');
+      this.dayService.setGlobalCursor('grabbing');
 
       this.fadeOutBox(boxElement, this.dayService.dragBoxElementIndex);
 
@@ -264,7 +252,7 @@ export class DayComponent implements OnInit {
   };
 
   endDragBox = (e: MouseEvent) => {
-    this.removeGlobalCursor('grabbing');
+    this.dayService.removeGlobalCursor('grabbing');
     let ghostElement = document.getElementById('box-ghost') as HTMLElement;
 
     this.dayService.applyDrag(e, ghostElement);

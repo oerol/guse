@@ -92,6 +92,7 @@ export class ActivitiesComponent implements OnInit {
 
       if (this.mouseIsHeldDown) {
         // user intends to drag the activity
+        this.dayService.setGlobalCursor('grabbing');
         let ghostElement = document.getElementById('activity-box-ghost') as HTMLElement;
 
         ghostElement.innerText = activityObject.name;
@@ -119,6 +120,8 @@ export class ActivitiesComponent implements OnInit {
   };
 
   handleMouseUp = (e: MouseEvent) => {
+    this.dayService.removeGlobalCursor('grabbing');
+
     let dragBoxElement = document.getElementById('activity-box-ghost') as HTMLElement;
     dragBoxElement.innerText = '';
     dragBoxElement.style.display = 'none';
