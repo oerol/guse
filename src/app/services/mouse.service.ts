@@ -16,12 +16,9 @@ export class MouseService {
   constructor() {
     document.addEventListener('mouseup', this.indicateMouseUp);
     document.addEventListener('mousedown', this.indicateMouseDown);
-    console.log(this.mouseIsPressedDown);
   }
 
   userIntendsToDrag = () => {
-    console.log(this.mouseIsPressedDown);
-
     return new Promise((resolve, reject) => {
       let intendsToDrag = false;
       setTimeout(() => {

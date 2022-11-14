@@ -15,7 +15,6 @@ export class DayService {
 
   callService() {
     this.count++;
-    console.log(this.count);
   }
 
   convertBoxHeightToHours = (boxHeight: number) => {

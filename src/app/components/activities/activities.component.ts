@@ -72,8 +72,6 @@ export class ActivitiesComponent implements OnInit {
 
   activityIndex = 0;
 
-  mouseDownInterval: NodeJS.Timeout | undefined;
-
   handleMouseDown = (e: MouseEvent) => {
     let activityElement = e.target as HTMLElement;
 
