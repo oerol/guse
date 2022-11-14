@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivityService } from 'src/app/services/activity.service';
 import { DayService } from 'src/app/services/day.service';
+import { MouseService } from 'src/app/services/mouse.service';
 
 @Component({
   selector: 'app-activities',
@@ -13,7 +14,11 @@ export class ActivitiesComponent implements OnInit {
     name: string;
   }[] = [];
   _subscription: any;
-  constructor(private dayService: DayService, private activityService: ActivityService) {
+  constructor(
+    private dayService: DayService,
+    private activityService: ActivityService,
+    private mouseService: MouseService
+  ) {
     dayService.callService();
     this.ACTIVITY_ITEMS = activityService.ACTIVITY_ITEMS;
     this._subscription = activityService.activitesChange.subscribe((value) => {
@@ -21,13 +26,7 @@ export class ActivitiesComponent implements OnInit {
     });
   }
 
-  setMouseIsHeldDown = () => {
-    this.mouseIsHeldDown = false;
-  };
-
-  ngOnInit(): void {
-    document.addEventListener('mouseup', this.setMouseIsHeldDown);
-  }
+  ngOnInit(): void {}
 
   ngOnDestroy() {
     //prevent memory leak when component destroyed
@@ -74,7 +73,6 @@ export class ActivitiesComponent implements OnInit {
   activityIndex = 0;
 
   mouseDownInterval: NodeJS.Timeout | undefined;
-  mouseIsHeldDown = false;
 
   handleMouseDown = (e: MouseEvent) => {
     let activityElement = e.target as HTMLElement;
@@ -84,14 +82,12 @@ export class ActivitiesComponent implements OnInit {
       activityElement = activityElement.parentElement as HTMLElement;
     }
 
-    this.mouseIsHeldDown = true;
-    this.mouseDownInterval = setTimeout(() => {
-      this.activityIndex = parseInt(activityElement.id.split('-')[1]) - 1;
-      let activityObject = this.ACTIVITY_ITEMS[this.activityIndex];
-      let color = this.getColorForActivity(activityObject.category);
+    this.activityIndex = parseInt(activityElement.id.split('-')[1]) - 1;
+    let activityObject = this.ACTIVITY_ITEMS[this.activityIndex];
+    let color = this.getColorForActivity(activityObject.category);
 
-      if (this.mouseIsHeldDown) {
-        // user intends to drag the activity
+    this.mouseService.userIntendsToDrag().then((intendsToDrag) => {
+      if (intendsToDrag) {
         this.dayService.setGlobalCursor('grabbing');
         let ghostElement = document.getElementById('activity-box-ghost') as HTMLElement;
 
@@ -108,7 +104,7 @@ export class ActivitiesComponent implements OnInit {
         let boxElement = { height: 1, title: activityObject.name, group: color };
         this.dayService.addToBoxes(boxElement);
       }
-    }, 150); // drag the activity if the mouse is still being pressed down after this interval
+    });
   };
 
   handleMouseMove = (e: MouseEvent) => {
