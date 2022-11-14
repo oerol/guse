@@ -165,7 +165,13 @@ export class DayService {
   };
 
   addToBoxes = (box: Box) => {
+    let initialBoxHeight = box.height;
+    box.height = 0;
+
     this.boxes.push(box);
+    setTimeout(() => {
+      this.boxes[this.boxes.length - 1].height = initialBoxHeight;
+    }, 1);
   };
 
   // https://stackoverflow.com/questions/10750582/global-override-of-mouse-cursor-with-javascript
