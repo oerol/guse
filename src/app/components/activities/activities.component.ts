@@ -107,9 +107,8 @@ export class ActivitiesComponent implements OnInit {
         // user intends to quickly add the activity to the day
         let boxElement = { height: 1, title: activityObject.name, group: color };
         this.dayService.addToBoxes(boxElement);
-        console.log('whopty');
       }
-    }, 100); // drag the activity if the mouse is still being pressed down after this interval
+    }, 150); // drag the activity if the mouse is still being pressed down after this interval
   };
 
   handleMouseMove = (e: MouseEvent) => {
