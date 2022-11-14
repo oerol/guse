@@ -20,8 +20,6 @@ export class DayComponent implements OnInit {
   HEIGHT_INCREMENT: number;
   DAY_LENGTH: number;
 
-  HEIGHT_IN_HOURS = 0.5;
-
   TIME_SPENT_AWAKE = 16;
 
   USER_DAY_START = 7;

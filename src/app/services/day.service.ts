@@ -9,6 +9,8 @@ export class DayService {
   MIN_BOX_HEIGHT = 20;
   HEIGHT_INCREMENT = 20;
 
+  HEIGHT_IN_HOURS = 0.25;
+
   constructor() {}
 
   callService() {
@@ -18,7 +20,7 @@ export class DayService {
 
   convertBoxHeightToHours = (boxHeight: number) => {
     console.log(boxHeight);
-    let duration = boxHeight / 4;
+    let duration = boxHeight * this.HEIGHT_IN_HOURS;
     let durationInHours = Math.floor(duration);
 
     if (duration % 1 === 0) {
@@ -122,7 +124,7 @@ export class DayService {
 
     let newBoxElementIndex: number = 0;
     if (this.insertable) {
-      if (this.getHeightOfAllBoxes() < 16 * 2) {
+      if (this.getHeightOfAllBoxes() < 16 / this.HEIGHT_IN_HOURS) {
         let lastBoxElement = boxElements[boxElements.length - 1];
         let lastBoxElementBoundingBox = lastBoxElement.getBoundingClientRect();
 
