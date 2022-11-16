@@ -111,6 +111,10 @@ export class DayService {
     return totalHeight;
   };
 
+  boxCanBeAdded = () => {
+    return this.getHeightOfAllBoxes() < 16 / this.HEIGHT_IN_HOURS;
+  };
+
   applyDrag = (e: MouseEvent, dragBoxElement: HTMLElement) => {
     let newBoxPosition = e.clientY;
 
@@ -122,7 +126,7 @@ export class DayService {
 
     let newBoxElementIndex: number = 0;
     if (this.insertable) {
-      if (this.getHeightOfAllBoxes() < 16 / this.HEIGHT_IN_HOURS) {
+      if (this.boxCanBeAdded()) {
         let lastBoxElement = boxElements[boxElements.length - 1];
         let lastBoxElementBoundingBox = lastBoxElement.getBoundingClientRect();
 
@@ -164,13 +168,15 @@ export class DayService {
   };
 
   addToBoxes = (box: Box) => {
-    let initialBoxHeight = box.height;
-    box.height = 0;
+    if (this.boxCanBeAdded()) {
+      let initialBoxHeight = box.height;
+      box.height = 0;
 
-    this.boxes.push(box);
-    setTimeout(() => {
-      this.boxes[this.boxes.length - 1].height = initialBoxHeight;
-    }, 1);
+      this.boxes.push(box);
+      setTimeout(() => {
+        this.boxes[this.boxes.length - 1].height = initialBoxHeight;
+      }, 1);
+    }
   };
 
   // https://stackoverflow.com/questions/10750582/global-override-of-mouse-cursor-with-javascript
