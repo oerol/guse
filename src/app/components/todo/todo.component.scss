@@ -1,0 +1,30 @@
+#todos-header {
+  display: flex;
+  gap: 40px;
+
+  margin-top: 3px;
+}
+
+h2 {
+  margin-top: 0;
+}
+
+#new-task-button {
+  background-color: #e2ebfa;
+  border: none;
+  border-radius: 5px;
+  padding: 0px 10px;
+  height: 30px;
+
+  cursor: pointer;
+}
+
+.todo-item {
+  display: flex;
+  gap: 20px;
+  height: 30px;
+  background-color: rgba(204, 204, 204, 0.815);
+  border-radius: 5px;
+  box-sizing: border-box;
+  padding: 5px;
+}

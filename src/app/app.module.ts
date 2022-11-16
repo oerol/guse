@@ -7,6 +7,7 @@ import { CategoriesComponent } from './components/categories/categories.componen
 import { ActivitiesComponent } from './components/activities/activities.component';
 import { SideMenuComponent } from './components/side-menu/side-menu.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { TodoComponent } from './components/todo/todo.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
     CategoriesComponent,
     ActivitiesComponent,
     SideMenuComponent,
-    DashboardComponent
+    DashboardComponent,
+    TodoComponent
   ],
   imports: [
     BrowserModule
