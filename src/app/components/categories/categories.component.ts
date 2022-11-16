@@ -50,8 +50,6 @@ export class CategoriesComponent implements OnInit {
     if (show) {
       categoryElement.textContent = indicator + categoryElement.textContent;
     } else {
-      console.log(categoryElement.textContent);
-      console.log(categoryElement.textContent!.replace(indicator, ''));
       categoryElement.textContent = categoryElement.textContent!.replace(indicator, '');
     }
   };
@@ -64,13 +62,15 @@ export class CategoriesComponent implements OnInit {
         this.handleFilterIndicator(this.filteredCategoryIndex, false);
       }
       this.activityService.resetFilter();
-
-      this.activityService.filterActivites(categoryItem.name);
       this.handleFilterIndicator(categoryIndex, true);
+      this.activityService.filterActivites(categoryItem.name);
+
+      this.filteredCategoryIndex = categoryIndex;
     } else {
       this.activityService.resetFilter();
       this.handleFilterIndicator(categoryIndex, false);
+
+      this.filteredCategoryIndex = -1;
     }
-    this.filteredCategoryIndex = categoryIndex;
   };
 }
