@@ -6,12 +6,12 @@
   <button id="new-task-button">+ New Task</button>
 </div>
 <div id="todo-title">Todo's:</div>
-<div *ngFor="let todo of TODO_LIST" class="todo-item">
+<div *ngFor="let todo of TODO_LIST; index as index" [class]="getClassName(todo)" (click)="tickTodoItem(index)">
   <div class="todo-icon">•</div>
   <div class="todo-item-title">{{ todo.title }}</div>
 </div>
 <div id="goals-title">Goals:</div>
-<div *ngFor="let goal of GOALS_LIST" class="todo-item">
+<div *ngFor="let goal of GOALS_LIST; index as index" [class]="getClassName(goal)" (click)="tickGoalItem(index)">
   <div class="todo-icon">•</div>
   <div class="todo-item-title">{{ goal.title }}</div>
 </div>

@@ -30,9 +30,14 @@ h2 {
   border-radius: 5px;
   box-sizing: border-box;
   padding: 5px 0px;
+  cursor: pointer;
 }
 
 #todo-title,
 #goals-title {
   margin-top: 20px;
+}
+
+.ticked > .todo-item-title {
+  text-decoration: line-through;
 }
