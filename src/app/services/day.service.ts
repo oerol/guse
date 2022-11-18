@@ -190,4 +190,30 @@ export class DayService {
   removeGlobalCursor = (cursor: string) => {
     document.getElementById(`global-cursor-style-${cursor}`)!.remove();
   };
+
+  getHeightOfPreviousBoxes = (boxIndex: number) => {
+    let heightOfOtherBoxes = 0;
+    for (let i = 0; i < boxIndex; i++) {
+      const element = this.boxes[i];
+      heightOfOtherBoxes += element.height;
+    }
+    return heightOfOtherBoxes;
+  };
+
+  getStartEndOfBox = (boxIndex: number) => {
+    let DAY_START = 7;
+    let DAY_START_TO_HEIGHT = DAY_START / this.HEIGHT_IN_HOURS;
+
+    let boxElement = this.boxes[boxIndex];
+    let boxHeight = boxElement.height;
+    let heightOfOtherBoxes = this.getHeightOfPreviousBoxes(boxIndex);
+
+    let start = DAY_START_TO_HEIGHT + heightOfOtherBoxes;
+    let end = DAY_START_TO_HEIGHT + heightOfOtherBoxes + boxHeight;
+    let startTime = this.convertBoxHeightToHours(start);
+    let endTime = this.convertBoxHeightToHours(end);
+
+    console.log(startTime, endTime);
+    return startTime + '-' + endTime;
+  };
 }
