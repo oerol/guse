@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { TodoService } from 'src/app/services/todo.service';
 import { Todo } from './todo';
 
 @Component({
@@ -7,13 +8,13 @@ import { Todo } from './todo';
   styleUrls: ['./todo.component.scss'],
 })
 export class TodoComponent implements OnInit {
-  TODO_LIST: Todo[] = [
-    { title: 'Write a review on Goodreads', ticked: true },
-    { title: 'Do some research on the author', ticked: false },
-  ];
-  GOALS_LIST = [{ title: 'Read 10 pages', ticked: false }];
+  TODO_LIST: Todo[];
+  GOALS_LIST: Todo[];
 
-  constructor() {}
+  constructor(private todoService: TodoService) {
+    this.TODO_LIST = todoService.TODO_LIST;
+    this.GOALS_LIST = todoService.GOALS_LIST;
+  }
 
   ngOnInit(): void {}
 
