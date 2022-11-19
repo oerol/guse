@@ -52,7 +52,7 @@
 
   color: white;
 
-  transition: 0.2s ease-out height, 0.2s ease-out padding;
+  transition: 0.2s ease-out height, 0.2s ease-out padding, 0.2s ease-out opacity;
 
   cursor: pointer;
   user-select: none;
@@ -158,4 +158,8 @@
 
     color: red;
   }
+}
+
+.transparent {
+  opacity: 0.2;
 }

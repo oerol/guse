@@ -216,10 +216,34 @@ export class DayComponent implements OnInit {
           document.addEventListener('mousemove', this.ghostDragBox);
           document.addEventListener('mouseup', this.endDragBox);
         } else {
-          // Show todos
-          this.todoService.changeActiveBox(boxElementIndex);
+          this.highlightBox(boxElementIndex);
         }
       });
+    }
+  };
+
+  highlightBoxElementIndex = -1;
+  highlightBox = (boxElementIndex: number) => {
+    let boxElements = Array.from(document.getElementsByClassName('box'));
+
+    if (boxElementIndex === this.highlightBoxElementIndex) {
+      for (let i = 0; i < boxElements.length; i++) {
+        const element = boxElements[i];
+        element.classList.remove('transparent');
+      }
+
+      this.highlightBoxElementIndex = -1;
+    } else {
+      for (let i = 0; i < boxElements.length; i++) {
+        const element = boxElements[i];
+        element.classList.add('transparent');
+        boxElements[boxElementIndex].classList.remove('transparent');
+      }
+
+      // Show todos
+      this.todoService.changeActiveBox(boxElementIndex);
+
+      this.highlightBoxElementIndex = boxElementIndex;
     }
   };
 
