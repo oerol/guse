@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DayService } from 'src/app/services/day.service';
 import { TodoService } from 'src/app/services/todo.service';
+import { Box } from '../day/box';
 import { Todo } from './todo';
 
 @Component({
@@ -14,12 +15,15 @@ export class TodoComponent implements OnInit {
 
   startEndTime: string;
 
+  activeBox: Box;
+
   _subscription: any;
 
   constructor(private todoService: TodoService, private dayService: DayService) {
     this.TODO_LIST = todoService.TODO_LIST;
     this.GOALS_LIST = todoService.GOALS_LIST;
     this.startEndTime = todoService.startEndTime;
+    this.activeBox = todoService.activeBox;
 
     this._subscription = todoService.activeBoxChange.subscribe((value) => {
       this.startEndTime = value;

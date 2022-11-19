@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
+import { Box } from '../components/day/box';
 import { Todo } from '../components/todo/todo';
 import { DayService } from './day.service';
 
@@ -14,6 +15,7 @@ export class TodoService {
   GOALS_LIST = [{ title: 'Read 10 pages', ticked: false }];
 
   activeBoxIndex = 0;
+  activeBox: Box;
 
   startEndTime = '';
 
@@ -21,6 +23,7 @@ export class TodoService {
 
   constructor(private dayService: DayService) {
     this.getStartEndTimeForActiveBox();
+    this.activeBox = dayService.boxes[this.activeBoxIndex];
   }
 
   getStartEndTimeForActiveBox = () => {
@@ -30,6 +33,7 @@ export class TodoService {
   changeActiveBox = (boxIndex: number) => {
     this.activeBoxIndex = boxIndex;
     this.getStartEndTimeForActiveBox();
+    this.dayService.boxes[boxIndex];
     this.activeBoxChange.next(this.startEndTime);
   };
 }
