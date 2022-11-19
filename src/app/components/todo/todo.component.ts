@@ -27,6 +27,9 @@ export class TodoComponent implements OnInit {
 
     this._subscription = todoService.activeBoxChange.subscribe((value) => {
       this.startEndTime = value;
+      console.log(todoService.TODO_LIST);
+      this.TODO_LIST = todoService.TODO_LIST;
+      this.GOALS_LIST = todoService.GOALS_LIST;
     });
   }
 
