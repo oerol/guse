@@ -14,10 +14,16 @@ export class TodoComponent implements OnInit {
 
   startEndTime: string;
 
+  _subscription: any;
+
   constructor(private todoService: TodoService, private dayService: DayService) {
     this.TODO_LIST = todoService.TODO_LIST;
     this.GOALS_LIST = todoService.GOALS_LIST;
     this.startEndTime = todoService.startEndTime;
+
+    this._subscription = todoService.activeBoxChange.subscribe((value) => {
+      this.startEndTime = value;
+    });
   }
 
   ngOnInit(): void {}

@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs';
 import { Todo } from '../components/todo/todo';
 import { DayService } from './day.service';
 
@@ -15,7 +16,20 @@ export class TodoService {
   activeBoxIndex = 0;
 
   startEndTime = '';
+
+  activeBoxChange: Subject<any> = new Subject<any>();
+
   constructor(private dayService: DayService) {
-    this.startEndTime = this.dayService.getStartEndOfBox(this.activeBoxIndex);
+    this.getStartEndTimeForActiveBox();
   }
+
+  getStartEndTimeForActiveBox = () => {
+    this.startEndTime = this.dayService.getStartEndOfBox(this.activeBoxIndex);
+  };
+
+  changeActiveBox = (boxIndex: number) => {
+    this.activeBoxIndex = boxIndex;
+    this.getStartEndTimeForActiveBox();
+    this.activeBoxChange.next(this.startEndTime);
+  };
 }

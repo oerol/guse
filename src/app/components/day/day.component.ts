@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DayService } from 'src/app/services/day.service';
 import { MouseService } from 'src/app/services/mouse.service';
+import { TodoService } from 'src/app/services/todo.service';
 import { Box } from './box';
 
 @Component({
@@ -29,7 +30,7 @@ export class DayComponent implements OnInit {
 
   isResizing = false;
 
-  constructor(private dayService: DayService, private mouseService: MouseService) {
+  constructor(private dayService: DayService, private mouseService: MouseService, private todoService: TodoService) {
     let userDayLength = this.USER_DAY_END - this.USER_DAY_START + 1;
     this.USER_DAY_TICKS = Array.from({ length: userDayLength }, (_, i) => i + this.USER_DAY_START);
 
@@ -199,8 +200,8 @@ export class DayComponent implements OnInit {
     let boxElement = e.target as HTMLElement;
 
     if (boxElement.id.includes('box')) {
-      let index = boxElement.id.split('-')[1];
-      this.dayService.dragBoxElementIndex = parseInt(index) - 1;
+      let boxElementIndex = parseInt(boxElement.id.split('-')[1]) - 1;
+      this.dayService.dragBoxElementIndex = boxElementIndex;
 
       this.mouseService.userIntendsToDrag().then((intendsToDrag) => {
         if (intendsToDrag) {
@@ -214,6 +215,9 @@ export class DayComponent implements OnInit {
 
           document.addEventListener('mousemove', this.ghostDragBox);
           document.addEventListener('mouseup', this.endDragBox);
+        } else {
+          // Show todos
+          this.todoService.changeActiveBox(boxElementIndex);
         }
       });
     }
