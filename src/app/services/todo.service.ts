@@ -9,10 +9,10 @@ import { DayService } from './day.service';
 })
 export class TodoService {
   TODO_LIST: Todo[] = [
-    { title: 'Write a review on Goodreads', ticked: true },
-    { title: 'Do some research on the author', ticked: false },
+    { activity: 'meditate', title: 'Write a review on Goodreads', ticked: true },
+    { activity: 'meditate', title: 'Do some research on the author', ticked: false },
   ];
-  GOALS_LIST = [{ title: 'Read 10 pages', ticked: false }];
+  GOALS_LIST: Todo[] = [{ activity: 'meditate', title: 'Read 10 pages', ticked: false }];
 
   activeBoxIndex = 0;
   activeBox: Box;
