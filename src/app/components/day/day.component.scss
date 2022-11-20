@@ -152,7 +152,7 @@
 
 .remove-box {
   &::after {
-    content: 'x';
+    content: '-';
     position: relative;
     top: -6px;
 
