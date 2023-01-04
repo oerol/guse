@@ -51,4 +51,18 @@ export class TodoComponent implements OnInit {
   tickGoalItem = (goalItemIndex: number) => {
     this.GOALS_LIST[goalItemIndex].ticked = !this.GOALS_LIST[goalItemIndex].ticked;
   };
+
+  creatingNewTask = false;
+
+  initiateNewTask = () => {
+    let todosContainer = document.getElementById('todos-container');
+    this.creatingNewTask = true;
+    console.log(this.creatingNewTask);
+  };
+
+  createNewTask = (e: Event) => {
+    let title = (e.target as HTMLElement).innerText;
+    this.TODO_LIST.push({ activity: '', ticked: false, title });
+    this.creatingNewTask = false;
+  };
 }

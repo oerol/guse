@@ -34,7 +34,6 @@ export class ActivitiesComponent implements OnInit {
   }
 
   getColorForActivity = (categoryName: string) => {
-    console.log(categoryName);
     let category = this.CATEGORY_ITEMS.find((categoryItem) => categoryItem.name === categoryName);
 
     if (category) {

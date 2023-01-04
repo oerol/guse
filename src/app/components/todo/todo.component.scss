@@ -27,7 +27,6 @@ h2 {
   display: flex;
   gap: 10px;
   height: 30px;
-  border-radius: 5px;
   box-sizing: border-box;
   padding: 5px 0px;
   cursor: pointer;
@@ -40,4 +39,13 @@ h2 {
 
 .ticked > .todo-item-title {
   text-decoration: line-through;
+}
+
+[contenteditable] {
+  outline: 0px solid transparent;
+  cursor: text;
+}
+
+#new-todo-item {
+  border-bottom: 1px solid gray;
 }
