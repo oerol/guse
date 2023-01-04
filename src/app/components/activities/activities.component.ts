@@ -34,6 +34,7 @@ export class ActivitiesComponent implements OnInit {
   }
 
   getColorForActivity = (categoryName: string) => {
+    console.log(categoryName);
     let category = this.CATEGORY_ITEMS.find((categoryItem) => categoryItem.name === categoryName);
 
     if (category) {
@@ -56,15 +57,24 @@ export class ActivitiesComponent implements OnInit {
     arrowElement.style.transform = rotation;
   };
 
+  currentCategoryColor = '';
   createNewActivityItem = (e: MouseEvent) => {
-    this.creatingNewActivityItem = true;
+    let currentCategory = this.activityService.currentFilteredCategory;
+    this.currentCategoryColor = this.getColorForActivity(currentCategory);
+
+    if (currentCategory) {
+      // todo
+      this.creatingNewActivityItem = true;
+    } else {
+      alert('Please select a category first!');
+    }
   };
 
   onKeyDownEvent = (e: Event) => {
-    console.log(e);
+    let currentCategory = this.activityService.currentFilteredCategory;
     let categoryName = (e.target as HTMLInputElement).value;
 
-    let newActivityItem = { category: 'none', name: categoryName };
+    let newActivityItem = { category: currentCategory, name: categoryName };
     this.ACTIVITY_ITEMS.push(newActivityItem);
 
     this.creatingNewActivityItem = false;

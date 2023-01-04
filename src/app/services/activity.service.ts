@@ -30,7 +30,11 @@ export class ActivityService {
     this.ACTIVITY_ITEMS.sort((a, b) => a.name.localeCompare(b.name));
   }
 
+  currentFilteredCategory = '';
+
   filterActivites = (category: string) => {
+    this.currentFilteredCategory = category;
+
     let filteredActivities = this.ACTIVITY_ITEMS.filter((activity) => activity.category === category);
     this.activitesChange.next(filteredActivities);
   };

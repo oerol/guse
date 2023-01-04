@@ -12,8 +12,8 @@
       <div [class]="'activity-item-color' + ' ' + getColorForActivity(activityItem.category)"></div>
       <div class="activity-item-name">{{ activityItem.name }}</div>
     </div>
-    <div *ngIf="creatingNewActivityItem" class="new-activity-item">
-      <div class="activity-item-color white"></div>
+    <div *ngIf="creatingNewActivityItem" id="new-activity-item">
+      <div [class]="'activity-item-color' + ' ' + currentCategoryColor"></div>
       <input type="text" name="" id="" (keydown.enter)="onKeyDownEvent($event)" />
     </div>
 
