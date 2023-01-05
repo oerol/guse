@@ -2,6 +2,7 @@
   <div id="todos-title">
     <h2>Tasks</h2>
     <div *ngIf="startEndTime" id="todo-time">→ {{ startEndTime }}</div>
+    <div *ngIf="!startEndTime" id="todo-time">→ Select a box!</div>
   </div>
   <button id="new-task-button" (click)="initiateNewTask()">+ New Task</button>
 </div>

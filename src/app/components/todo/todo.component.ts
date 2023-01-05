@@ -55,9 +55,11 @@ export class TodoComponent implements OnInit {
   creatingNewTask = false;
 
   initiateNewTask = () => {
-    let todosContainer = document.getElementById('todos-container');
-    this.creatingNewTask = true;
-    console.log(this.creatingNewTask);
+    if (this.todoService.activeBox) {
+      this.creatingNewTask = true;
+    } else {
+      alert('Please select a box first by clicking on it!');
+    }
   };
 
   createNewTask = (e: Event) => {
