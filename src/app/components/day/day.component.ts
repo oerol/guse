@@ -233,6 +233,7 @@ export class DayComponent implements OnInit {
       }
 
       this.highlightBoxElementIndex = -1;
+      this.todoService.clearActiveBox();
     } else {
       for (let i = 0; i < boxElements.length; i++) {
         const element = boxElements[i];

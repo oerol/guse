@@ -1,7 +1,7 @@
 <div id="todos-header">
   <div id="todos-title">
     <h2>Tasks</h2>
-    <div id="todo-time">→ {{ startEndTime }}</div>
+    <div *ngIf="startEndTime" id="todo-time">→ {{ startEndTime }}</div>
   </div>
   <button id="new-task-button" (click)="initiateNewTask()">+ New Task</button>
 </div>

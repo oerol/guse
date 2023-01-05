@@ -18,22 +18,17 @@ export class TodoService {
     { activity: 'meditate', title: 'Meditate for 10 minutes', ticked: false },
   ];
 
-  TODO_LIST: Todo[];
-  GOALS_LIST: Todo[];
+  TODO_LIST: Todo[] = [];
+  GOALS_LIST: Todo[] = [];
 
   activeBoxIndex = 0;
-  activeBox: Box;
+  activeBox!: Box;
 
   startEndTime = '';
 
   activeBoxChange: Subject<any> = new Subject<any>();
 
-  constructor(private dayService: DayService) {
-    this.getStartEndTimeForActiveBox();
-    this.activeBox = dayService.boxes[this.activeBoxIndex];
-    this.TODO_LIST = this.TODO_LIST_ALL.filter((todoItem) => this.activeBox.title === todoItem.activity);
-    this.GOALS_LIST = this.GOALS_LIST_ALL.filter((goalItem) => this.activeBox.title === goalItem.activity);
-  }
+  constructor(private dayService: DayService) {}
 
   getStartEndTimeForActiveBox = () => {
     this.startEndTime = this.dayService.getStartEndOfBox(this.activeBoxIndex);
@@ -45,6 +40,16 @@ export class TodoService {
 
     this.getTodosForCurrentActivity();
     this.getStartEndTimeForActiveBox();
+
+    this.activeBoxChange.next(this.startEndTime);
+  };
+
+  clearActiveBox = () => {
+    this.activeBoxIndex = 0;
+    this.activeBox = {} as Box;
+
+    this.getTodosForCurrentActivity();
+    this.startEndTime = '';
 
     this.activeBoxChange.next(this.startEndTime);
   };
