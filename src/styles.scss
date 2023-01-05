@@ -1,5 +1,16 @@
 /* You can add global styles to this file, and also import other style files */
 
+@font-face {
+  font-family: Cascadia Code;
+  src: url('./assets/CascadiaCode.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: Cascadia Code;
+  src: url('./assets/CascadiaCode-Bold.woff2') format('woff2');
+  font-weight: bold;
+}
+
 body {
   margin: 0;
   font-family: Cascadia Code;
@@ -10,4 +21,42 @@ body {
 
 button {
   font-family: Cascadia Code;
+}
+
+@media (max-width: 950px) {
+  body {
+    font-size: 14px;
+    overflow-y: auto;
+  }
+  .vertical-seperator {
+    display: none;
+  }
+  main {
+    flex-direction: column !important;
+  }
+  app-side-menu {
+    order: 1;
+  }
+  app-todo {
+    order: 2;
+  }
+
+  .day-wrapper {
+    height: 300px !important;
+    overflow-x: hidden;
+  }
+
+  #side-menu-wrapper {
+    width: auto !important;
+  }
+
+  .categories-content,
+  .activities-content {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .category-item,
+  .activity-item {
+    flex: 50%;
+  }
 }
