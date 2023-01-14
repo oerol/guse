@@ -1,6 +1,7 @@
 <div align="center">
 
 # GUSE: Manage your activities and plan your day
+![guse](https://user-images.githubusercontent.com/74826613/212467179-9b70bff1-91bd-4356-8b7f-1822f1d6a90e.png)
 
 </div>
 
